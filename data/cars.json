@@ -1,0 +1,143 @@
+{
+  "vios_2026": {
+    "brand": "Toyota",
+    "model": "Vios 1.5E CVT",
+    "price": 540000000,
+    "type": "ICE",
+    "consumption": 5.8,
+    "depreciation_rate": 0.10,
+    "annual_maintenance": 8000000
+  },
+  "camry_2026": {
+    "brand": "Toyota",
+    "model": "Camry 2.5Q",
+    "price": 1250000000,
+    "type": "ICE",
+    "consumption": 8.2,
+    "depreciation_rate": 0.10,
+    "annual_maintenance": 12000000
+  },
+  "accent_2026": {
+    "brand": "Hyundai",
+    "model": "Accent 1.4 AT",
+    "price": 542000000,
+    "type": "ICE",
+    "consumption": 6.1,
+    "depreciation_rate": 0.12,
+    "annual_maintenance": 7500000
+  },
+  "civic_2026": {
+    "brand": "Honda",
+    "model": "Civic RS",
+    "price": 870000000,
+    "type": "ICE",
+    "consumption": 6.7,
+    "depreciation_rate": 0.11,
+    "annual_maintenance": 10000000
+  },
+  "crv_2026": {
+    "brand": "Honda",
+    "model": "CR-V L",
+    "price": 1120000000,
+    "type": "ICE",
+    "consumption": 7.9,
+    "depreciation_rate": 0.11,
+    "annual_maintenance": 11000000
+  },
+  "vf3_2026": {
+    "brand": "VinFast",
+    "model": "VF 3",
+    "price": 322000000,
+    "type": "EV",
+    "consumption": 12.5,
+    "depreciation_rate": 0.15,
+    "annual_maintenance": 4000000,
+    "battery_rental_monthly": 900000,
+    "battery_rental_tiers": {
+      "1500": 900000,
+      "3000": 1350000,
+      "unlimited": 1850000
+    },
+    "battery_purchase_price": 0
+  },
+  "vf5_2026": {
+    "brand": "VinFast",
+    "model": "VF 5 Plus",
+    "price": 488000000,
+    "type": "EV",
+    "consumption": 14.0,
+    "depreciation_rate": 0.15,
+    "annual_maintenance": 4500000,
+    "battery_rental_monthly": 1350000,
+    "battery_rental_tiers": {
+      "1500": 1350000,
+      "3000": 1900000,
+      "unlimited": 2500000
+    },
+    "battery_purchase_price": 0
+  },
+  "vfe34_2026": {
+    "brand": "VinFast",
+    "model": "VF e34",
+    "price": 690000000,
+    "type": "EV",
+    "consumption": 15.8,
+    "depreciation_rate": 0.15,
+    "annual_maintenance": 5000000,
+    "battery_rental_monthly": 1900000,
+    "battery_rental_tiers": {
+      "1500": 1900000,
+      "3000": 2500000,
+      "unlimited": 3200000
+    },
+    "battery_purchase_price": 0
+  },
+  "vf7_2026": {
+    "brand": "VinFast",
+    "model": "VF 7 Plus",
+    "price": 999000000,
+    "type": "EV",
+    "consumption": 17.5,
+    "depreciation_rate": 0.14,
+    "annual_maintenance": 5500000,
+    "battery_rental_monthly": 2200000,
+    "battery_rental_tiers": {
+      "1500": 2200000,
+      "3000": 3000000,
+      "unlimited": 3800000
+    },
+    "battery_purchase_price": 150000000
+  },
+  "vf8_2026": {
+    "brand": "VinFast",
+    "model": "VF 8 Eco",
+    "price": 1130000000,
+    "type": "EV",
+    "consumption": 19.2,
+    "depreciation_rate": 0.14,
+    "annual_maintenance": 6000000,
+    "battery_rental_monthly": 2900000,
+    "battery_rental_tiers": {
+      "1500": 2900000,
+      "3000": 3700000,
+      "unlimited": 4800000
+    },
+    "battery_purchase_price": 200000000
+  },
+  "vf9_2026": {
+    "brand": "VinFast",
+    "model": "VF 9 Eco",
+    "price": 1530000000,
+    "type": "EV",
+    "consumption": 22.0,
+    "depreciation_rate": 0.14,
+    "annual_maintenance": 7000000,
+    "battery_rental_monthly": 3500000,
+    "battery_rental_tiers": {
+      "1500": 3500000,
+      "3000": 4500000,
+      "unlimited": 5500000
+    },
+    "battery_purchase_price": 280000000
+  }
+}

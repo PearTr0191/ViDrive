@@ -1,0 +1,26 @@
+from datetime import date
+
+# Prices
+PETROL_PRICE_VND = 23500
+EV_CHARGING_PRICE_VND = 3000
+
+# Registration
+ICE_REGISTRATION_RATE_CITY = 0.12
+ICE_REGISTRATION_RATE_PROVINCE = 0.10
+EV_EXEMPTION_END_DATE = date(2027, 2, 28)
+EV_POST_EXEMPTION_DISCOUNT = 0.50
+CITIES_WITH_HIGH_REG_FEE = {"hanoi", "hcmc", "ho chi minh", "ha noi", "saigon"}
+
+# Maintenance
+EV_MAINTENANCE_DISCOUNT = 0.70
+
+# Depreciation
+DEFAULT_DEPRECIATION_ICE = 0.10
+DEFAULT_DEPRECIATION_EV = 0.15
+
+# Battery Tiers
+BATTERY_TIER_LOW_KM_MONTHLY = 1500
+BATTERY_TIER_MID_KM_MONTHLY = 3000
+
+def fmt_vnd(amount):
+    return f"{amount:,.0f} VND"
