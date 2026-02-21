@@ -36,6 +36,6 @@ We are moving beyond basic arithmetic to provide deeper financial insights:
 
 * **Urban Stress Factor:** Multipliers for engine hours in HCMC/Hanoi traffic vs. open road mileage to reflect real-world wear.
 
-* **Regional Fee Differentiation:** Adjusting registration tax specifically for Hanoi (12%) vs. other provinces (10%).
+* **Regional Fee Differentiation:** Adjusting registration tax for different provinces.
 
 * **CSV Export:** For when you need to show your not-(tech-savvy) spouse why the car is a bad idea.
