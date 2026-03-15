@@ -1,7 +1,5 @@
 from src.config import fmt_vnd
 
-# Minimalist UI Helper Functions
-
 def print_header():
     print("\n--- VIDRIVE TCO CALCULATOR ---\n")
 
@@ -9,56 +7,74 @@ def print_car_list(cars):
     print(f"{'ID':<15} {'Brand':<10} {'Model':<20} {'Price':>15}")
     print("-" * 65)
     for cid, c in cars.items():
-        print(f"{cid:<15} {c['brand']:<10} {c.get('model', 'Unknown'):<20} {fmt_vnd(c['price']):>15}")
+        print(f"{cid:<15} {c['brand']:<10} {c.get('model', cid):<20} {fmt_vnd(c['price']):>15}")
     print("\n")
 
-def print_result(car_id, year, breakdown):
-    # Minimalist result print
+def print_result(car_id, year, res):
+    # Premium Lifecycle Output (Buy -> Run -> Exit)
     print(f"Vehicle: {car_id.upper()}")
-    print("-" * 40)
-    print(f"Acquisition:     {fmt_vnd(breakdown['price'] + breakdown['reg_fee']):>15}")
-    print(f"Fuel/Charge:     {fmt_vnd(breakdown['fuel_total']):>15}")
-    print(f"Maintenance:     {fmt_vnd(breakdown['maint_total']):>15}")
-    if breakdown['battery_total'] > 0:
-        print(f"Battery Rent:    {fmt_vnd(breakdown['battery_total']):>15}")
+    print("=" * 45)
     
-    print("-" * 40)
-    print(f"Total Spent:     {fmt_vnd(breakdown['tco'] + breakdown['resale']):>15}")
-    print(f"Resale Value:   -{fmt_vnd(breakdown['resale']):>15}")
-    print("=" * 40)
-    print(f"NET TCO ({year}y): {fmt_vnd(breakdown['tco']):>15}")
-    print(f"Monthly Cost:    {fmt_vnd(breakdown['monthly']):>15}")
+    print("SUMMARY")
+    print(f"On-road purchase price: {fmt_vnd(res['on_road']):>18}")
+    print(f"Net TCO ({year} Years):     {fmt_vnd(res['tco']):>18}")
+    print(f"Monthly Average:        {fmt_vnd(res['monthly']):>18}")
+    print("-" * 45)
+
+    print("1. INITIAL OUTLAY")
+    print(f"MSRP Price:             {fmt_vnd(res['price']):>18}")
+    print(f" - Registration Tax:    {fmt_vnd(res['reg']['tax']):>18}")
+    print(f" - Plate & Inspection:  {fmt_vnd(res['reg']['plate'] + res['reg']['inspection']):>18}")
+    print(f"Total Outlay:           {fmt_vnd(res['on_road']):>18}")
+    print("")
+
+    print("2. OPERATING COSTS")
+    print(f"Fuel / Energy:          {fmt_vnd(res['fuel']):>18}")
+    print(f"Maintenance:            {fmt_vnd(res['maint']):>18}")
+    print(f"Insurance & Fees:       {fmt_vnd(res['legal']):>18}")
+    print(f"Total Operating:        {fmt_vnd(res['operating']):>18}")
+    print("")
+
+    print("3. RESALE & DEPRECIATION")
+    print(f"Predicted Resale:       {fmt_vnd(res['resale']):>18}")
+    print(f"Total Depreciation:     {fmt_vnd(res['depreciation']):>18}")
+    print(f" Logic: {res['resale_logic']}")
+    print("=" * 45)
     print("\n")
 
 def print_comparison(c1_id, c1_res, c2_id, c2_res):
-    # Simple side-by-side text
-    print(f"\nCOMPARISON: {c1_id} vs {c2_id}")
-    print("-" * 60)
-    print(f"{'Metric':<20} {c1_id:>18} {c2_id:>18}")
-    print("-" * 60)
+    # Side-by-Side Comparison
+    print(f"\nCOMPARISON: {c1_id.upper()} vs {c2_id.upper()}")
+    print("=" * 75)
     
-    metrics = [
-        ("Purchase Price", c1_res['price'], c2_res['price']),
-        ("Registration", c1_res['reg_fee'], c2_res['reg_fee']),
-        ("Fuel/Charge", c1_res['fuel_total'], c2_res['fuel_total']),
-        ("Maintenance", c1_res['maint_total'], c2_res['maint_total']),
-        ("Battery Rent", c1_res['battery_total'], c2_res['battery_total']),
-        ("Resale Value", c1_res['resale'], c2_res['resale']),
-    ]
-    
-    for label, v1, v2 in metrics:
-        print(f"{label:<20} {fmt_vnd(v1):>18} {fmt_vnd(v2):>18}")
-        
-    print("-" * 60)
-    # Highlight the winner
+    print(f"{'Lifecycle Phase':<25} {c1_id.upper():>22} {c2_id.upper():>22}")
+    print("-" * 75)
+
+    print("SUMMARY")
+    print(f"{'On-road purchase price':<25} {fmt_vnd(c1_res['on_road']):>22} {fmt_vnd(c2_res['on_road']):>22}")
+    print(f"{'Net TCO (5 Years)':<25} {fmt_vnd(c1_res['tco']):>22} {fmt_vnd(c2_res['tco']):>22}")
+    print(f"{'Monthly Average':<25} {fmt_vnd(c1_res['monthly']):>22} {fmt_vnd(c2_res['monthly']):>22}")
+    print("-" * 75)
+
+    print("1. INITIAL OUTLAY")
+    print(f"{'MSRP Price':<25} {fmt_vnd(c1_res['price']):>22} {fmt_vnd(c2_res['price']):>22}")
+    print(f"{' - Registration Tax':<25} {fmt_vnd(c1_res['reg']['tax']):>22} {fmt_vnd(c2_res['reg']['tax']):>22}")
+    print(f"{'Total Outlay':<25} {fmt_vnd(c1_res['on_road']):>22} {fmt_vnd(c2_res['on_road']):>22}")
+    print("")
+
+    print("2. OPERATING COSTS")
+    print(f"{'Fuel / Energy':<25} {fmt_vnd(c1_res['fuel']):>22} {fmt_vnd(c2_res['fuel']):>22}")
+    print(f"{'Maintenance':<25} {fmt_vnd(c1_res['maint']):>22} {fmt_vnd(c2_res['maint']):>22}")
+    print(f"{'Total Operating':<25} {fmt_vnd(c1_res['operating']):>22} {fmt_vnd(c2_res['operating']):>22}")
+    print("")
+
+    print("3. RESALE & DEPRECIATION")
+    print(f"{'Predicted Resale':<25} {fmt_vnd(c1_res['resale']):>22} {fmt_vnd(c2_res['resale']):>22}")
+    print(f"{'Total Depreciation':<25} {fmt_vnd(c1_res['depreciation']):>22} {fmt_vnd(c2_res['depreciation']):>22}")
+    print("-" * 75)
+
     diff = c1_res['tco'] - c2_res['tco']
-    print(f"{'NET TCO':<20} {fmt_vnd(c1_res['tco']):>18} {fmt_vnd(c2_res['tco']):>18}")
-    
-    print("\nVERDICT:")
-    if diff > 0:
-        print(f"-> {c2_id} is CHEAPER by {fmt_vnd(abs(diff))}")
-    elif diff < 0:
-        print(f"-> {c1_id} is CHEAPER by {fmt_vnd(abs(diff))}")
-    else:
-        print("-> It's a TIE.")
+    winner = c2_id.upper() if diff > 0 else c1_id.upper()
+    print(f"VERDICT: {winner} is MORE ECONOMICAL by {fmt_vnd(abs(diff))}")
+    print("=" * 75)
     print("\n")
