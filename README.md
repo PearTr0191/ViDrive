@@ -30,7 +30,6 @@ Follow the on-screen prompts to select/add your vehicle and input your variables
 
 ## Coming Soon
 We are moving beyond basic arithmetic to provide deeper financial insights:
-* **Resale Value Engine:** Logarithmic depreciation curves specific to the VN market (accounting for the "Toyota vs. the rest" value retention).
 
 * **Opportunity Cost (TVM):** Calculation of lost gains if the capital was kept in a standard VN savings account (~6-8%) instead of a depreciating asset.
 
