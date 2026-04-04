@@ -1,8 +1,8 @@
 from datetime import date
 
-# --- Fuel Prices (March 2026) ---
-PETROL_PRICE_VND = 25575   # RON 95-III
-EV_CHARGING_PRICE_VND = 3858  # VinFast public, incl. VAT
+# --- Fuel Prices (9-month weighted average, April 2026) ---
+PETROL_PRICE_VND = 23850   # RON 95-III
+EV_CHARGING_PRICE_VND = 2150  # Weighted 5-year avg reflecting 2027 promo
 
 # --- Registration ---
 ICE_REGISTRATION_RATE_STANDARD = 0.10
@@ -11,7 +11,7 @@ EV_EXEMPTION_END_DATE = date(2027, 2, 28)
 EV_POST_EXEMPTION_DISCOUNT = 0.50
 
 # --- Area Classification (6 Cities, 28 Provinces) ---
-# Area 1: Centrally Governed Cities — 20M plate, 12% reg tax
+# Area 1: Centrally Governed Cities - 20M plate, 12% reg tax
 AREA1_CITIES = {
     "hanoi", "hn", "ha noi",
     "ho chi minh", "hcmc", "saigon",
@@ -51,7 +51,7 @@ MAINTENANCE_MAJOR_COST_ICE = 5_000_000
 MAINTENANCE_MAJOR_COST_EV = 1_500_000
 
 # --- Depreciation ---
-# V(t) = P × (1 - y1_drop) × (1 - annual_decay)^(t-1)
+# V(t) = P * (1 - y1_drop) * (1 - annual_decay)^(t-1)
 DEPRECIATION_EQ_PARAMS = {
     "ice":        {"y1_drop": 0.15, "annual_decay": 0.094},
     "vinfast_ev": {"y1_drop": 0.10, "annual_decay": 0.070},
@@ -59,7 +59,7 @@ DEPRECIATION_EQ_PARAMS = {
 DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 
 # --- Data Recency ---
-LAST_UPDATED = date(2026, 3, 14)
+LAST_UPDATED = date(2026, 4, 4)
 DATA_RECENCY_DAYS = 270
 
 def fmt_vnd(amount):

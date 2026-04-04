@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 ViDrive — TCO Calculator for the Vietnamese Market
-v0.3.0 — 3-tier regional fees, auto area detection, parametric depreciation
+v0.3.1 — 3-tier regional fees, auto area detection, parametric depreciation
 """
 
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.3.1"
 
 import sys, os, json, argparse
 from datetime import date
@@ -131,6 +131,14 @@ def interactive_mode(cars):
     # Common params — area tier is auto-detected from city/province name
     city = get_input("City/Province", "hanoi")
     area = get_area_tier(city)
+    if area == 2:
+        print("\n  Is this location a City/Town (Area 2) or a Rural District (Area 3)?")
+        print("    1. Provincially-governed City or Town [Default]")
+        print("    2. Rural District or Commune")
+        sub_choice = get_input("  Selection", "1")
+        if sub_choice == "2":
+            area = 3
+
     area_labels = {1: "Area 1 (Central City)", 2: "Area 2 (Province)", 3: "Area 3 (Rural)"}
     print(f"  → {city.title()} → {area_labels[area]}")
 
@@ -140,15 +148,15 @@ def interactive_mode(cars):
     if choice == "1":
         cid = select_car(cars)
         if cid:
-            print_result(cid, years, get_tco(cars[cid], city, km, years))
+            print_result(cid, years, get_tco(cars[cid], city, km, years, area=area))
     elif choice == "2":
         c1, c2 = select_car(cars, "Car 1"), select_car(cars, "Car 2")
         if c1 and c2:
-            print_comparison(c1, get_tco(cars[c1], city, km, years),
-                             c2, get_tco(cars[c2], city, km, years))
+            print_comparison(c1, get_tco(cars[c1], city, km, years, area=area),
+                             c2, get_tco(cars[c2], city, km, years, area=area))
     elif choice == "3":
         car = get_custom_car_wizard()
-        print_result(car["brand"], years, get_tco(car, city, km, years))
+        print_result(car["brand"], years, get_tco(car, city, km, years, area=area))
 
     cont = get_input("\nRun another calculation? (y/n)", "y")
     if cont.lower() == 'y':

@@ -1,9 +1,10 @@
 from src.config import *
 from datetime import date
 
-def calculate_registration(price, city, car_type, purchase_date=None):
-    """[v0.3.0] Registration tax + plate fee, auto-resolved by area tier."""
-    area = get_area_tier(city)
+def calculate_registration(price, city, car_type, purchase_date=None, area=None):
+    """[v0.3.0] Registration tax + plate fee, auto-resolved by area tier (or explicit override)."""
+    if area is None:
+        area = get_area_tier(city)
     tax_rate = ICE_REGISTRATION_RATE_CENTRAL_CITY if area == 1 else ICE_REGISTRATION_RATE_STANDARD
 
     if car_type == "ICE":
@@ -49,10 +50,10 @@ def calculate_resale(price, years, car_type, rate=None, brand=None):
     retention = (1 - params["y1_drop"]) * ((1 - params["annual_decay"]) ** (years - 1))
     return price * retention
 
-def get_tco(car, city, km, years=5, purchase_date=None):
-    """Master TCO: Acquisition + Running - Resale. Area tier auto-detected from city."""
+def get_tco(car, city, km, years=5, purchase_date=None, area=None):
+    """Master TCO: Acquisition + Running - Resale. Area tier auto-detected from city (or override)."""
     price = car["price"]
-    reg = calculate_registration(price, city, car["type"], purchase_date)
+    reg = calculate_registration(price, city, car["type"], purchase_date, area=area)
 
     fuel = calculate_fuel_cost(km, car["consumption"], car["type"]) * years
     maint = calculate_maintenance(km, car["type"], car.get("annual_maintenance", 8_000_000), years)
