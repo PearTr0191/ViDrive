@@ -1,42 +1,64 @@
 from datetime import date
 
-# Prices (Cross-checked March 2026)
-PETROL_PRICE_VND = 25575   # RON 95-III, Petrolimex 12/03/2026
-EV_CHARGING_PRICE_VND = 3858  # VinFast public charging, incl. VAT
+# --- Fuel Prices (March 2026) ---
+PETROL_PRICE_VND = 25575   # RON 95-III
+EV_CHARGING_PRICE_VND = 3858  # VinFast public, incl. VAT
 
-# Registration (Cross-checked March 2026)
-ICE_REGISTRATION_RATE_CITY = 0.10     # Luật Lệ phí trước bạ 2024
-ICE_REGISTRATION_RATE_PROVINCE = 0.10  # Provinces may add up to 50%
+# --- Registration ---
+ICE_REGISTRATION_RATE_STANDARD = 0.10
+ICE_REGISTRATION_RATE_CENTRAL_CITY = 0.12
 EV_EXEMPTION_END_DATE = date(2027, 2, 28)
 EV_POST_EXEMPTION_DISCOUNT = 0.50
-CITIES_WITH_HIGH_REG_FEE = {"hn", "hanoi", "hcmc", "ho chi minh", "ha noi", "saigon"}
 
-# Maintenance
-EV_MAINTENANCE_DISCOUNT = 0.70
-
-# Depreciation - Parametric Equation (Maximum Realism)
-# Value = Price * (1 - y1_drop) * (1 - annual_decay)^(years - 1)
-DEPRECIATION_EQ_PARAMS = {
-    "ice":         {"y1_drop": 0.15, "annual_decay": 0.094}, # ~56% retention at Year 5
-    "vinfast_ev":  {"y1_drop": 0.10, "annual_decay": 0.070}, # ~66% retention at Year 5
+# --- Area Classification (6 Cities, 28 Provinces) ---
+# Area 1: Centrally Governed Cities — 20M plate, 12% reg tax
+AREA1_CITIES = {
+    "hanoi", "hn", "ha noi",
+    "ho chi minh", "hcmc", "saigon",
+    "hue", "da nang", "can tho", "hai phong",
 }
-DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05   # Extra Y1 penalty when custom rate given
 
-# On-Road Fees (Cross-checked March 2026)
-PLATE_FEE_CITY = 14000000       # Thông tư 155/2025/TT-BTC
-PLATE_FEE_PROVINCE = 140000      # Other provinces
-INSPECTION_FEE = 290000          # 250K kiểm định + 40K GCN, per Thông tư 156/2025/TT-BTC
-ROAD_MAINTENANCE_FEE_YEARLY = 1560000
-CIVIL_INSURANCE_YEARLY = 480700  # 4-seat non-commercial, incl. VAT, per NĐ 67/2023
+# Area 2: Provincial capitals & urban districts
+AREA2_PROVINCES = {
+    "an giang", "bac ninh", "ca mau", "cao bang",
+    "dak lak", "dien bien", "dong nai", "dong thap",
+    "gia lai", "ha tinh", "hung yen", "khanh hoa",
+    "lai chau", "lam dong", "lang son", "lao cai",
+    "nghe an", "ninh binh", "phu tho", "quang ngai",
+    "quang ninh", "quang tri", "son la", "thai nguyen",
+    "thanh hoa", "tay ninh", "tuyen quang", "vinh long",
+}
 
-# --- Legacy Configuration Removed: Battery Tiers ---
+def get_area_tier(city: str) -> int:
+    """Return 1, 2, or 3 based on the input city/province name."""
+    key = city.lower().strip()
+    if key in AREA1_CITIES:
+        return 1
+    if key in AREA2_PROVINCES:
+        return 2
+    return 2  # default to provincial if unrecognized
 
-# Maintenance Milestones (v0.2.0)
-MAINTENANCE_MAJOR_KM = 40000               # Interval for major service
-MAINTENANCE_MAJOR_COST_ICE = 5000000        # VND per milestone
-MAINTENANCE_MAJOR_COST_EV  = 1500000        # VND per milestone
+# --- On-Road Fees ---
+PLATE_FEES = {1: 20_000_000, 2: 1_000_000, 3: 200_000}
+INSPECTION_FEE = 340_000
+ROAD_MAINTENANCE_FEE_YEARLY = 1_560_000
+CIVIL_INSURANCE_YEARLY = 480_700
 
-# Data Recency (v0.2.0)
+# --- Maintenance ---
+EV_MAINTENANCE_DISCOUNT = 0.70
+MAINTENANCE_MAJOR_KM = 40_000
+MAINTENANCE_MAJOR_COST_ICE = 5_000_000
+MAINTENANCE_MAJOR_COST_EV = 1_500_000
+
+# --- Depreciation ---
+# V(t) = P × (1 - y1_drop) × (1 - annual_decay)^(t-1)
+DEPRECIATION_EQ_PARAMS = {
+    "ice":        {"y1_drop": 0.15, "annual_decay": 0.094},
+    "vinfast_ev": {"y1_drop": 0.10, "annual_decay": 0.070},
+}
+DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
+
+# --- Data Recency ---
 LAST_UPDATED = date(2026, 3, 14)
 DATA_RECENCY_DAYS = 270
 

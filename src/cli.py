@@ -17,7 +17,7 @@ def print_result(car_id, year, res):
     
     print("SUMMARY")
     print(f"On-road purchase price: {fmt_vnd(res['on_road']):>18}")
-    print(f"Net TCO ({year} Years):     {fmt_vnd(res['tco']):>18}")
+    print(f"Net TCO ({year} Years):      {fmt_vnd(res['tco']):>18}")
     print(f"Monthly Average:        {fmt_vnd(res['monthly']):>18}")
     print("-" * 45)
 
