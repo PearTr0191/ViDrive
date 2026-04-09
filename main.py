@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
-"""
-ViDrive — TCO Calculator for the Vietnamese Market
-v0.3.1 — 3-tier regional fees, auto area detection, parametric depreciation
-"""
-
-APP_VERSION = "0.3.1"
-
-import sys, os, json, argparse
+from pathlib import Path
+import sys, json, argparse
 from datetime import date
+
+APP_VERSION = "0.4.0"
 
 if sys.stdout.encoding != 'utf-8' and hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
@@ -16,91 +11,71 @@ from src.config import *
 from src.calculations import *
 from src.cli import *
 
-CARS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "cars.json")
+ROOT_DIR = Path(__file__).parent
+CARS_FILE = ROOT_DIR / "data" / "cars.json"
 
 def load_data():
-    if not os.path.exists(CARS_FILE):
+    if not CARS_FILE.exists():
         print(f"Error: Database file not found at {CARS_FILE}")
         return {}
-    with open(CARS_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        if not data:
-            print("Warning: Database is empty!")
-        return data
+    with CARS_FILE.open('r', encoding='utf-8') as f:
+        raw = json.load(f) or {}
+
+    # Return a dict ordered alphabetically by brand then model for consistent UI ordering
+    try:
+        sorted_items = sorted(
+            raw.items(),
+            key=lambda kv: (kv[1].get('brand', '').lower(), kv[1].get('model', '').lower())
+        )
+        return dict(sorted_items)
+    except Exception:
+        return raw
 
 # --- Input Helpers ---
 
-def parse_smart_value(text):
-    """Parses shorthand like '500m', '1.2b', '15k' into numbers."""
+def parse_val(text):
+    if not text: return None
+    text = text.lower().strip().replace(",", "")
+    mult = {'k': 1_000, 'm': 1_000_000, 'b': 1_000_000_000}
     try:
-        text = text.lower().strip().replace(",", "")
-        if not text: return None
-        multiplier = {'k': 1_000, 'm': 1_000_000, 'b': 1_000_000_000}
-        if text[-1] in multiplier:
-            return float(text[:-1]) * multiplier[text[-1]]
-        return float(text)
-    except:
-        return None
+        return float(text[:-1]) * mult[text[-1]] if text[-1] in mult else float(text)
+    except: return None
 
-def get_num(prompt, default=None):
-    while True:
-        val = parse_smart_value(get_input(prompt, default))
-        if val is not None:
-            return val
-        print("Invalid number. Use digits or shorthand like '500m'.")
-
-def get_input(prompt, default=None):
+def ask(prompt, default=None, is_num=False):
     disp = f"{prompt} [{default}]: " if default else f"{prompt}: "
-    val = input(disp).strip()
-    return val if val else default
+    while True:
+        val = input(disp).strip() or default
+        if not is_num: return val
+        num = parse_val(str(val))
+        if num is not None: return num
+        print("Invalid number format. Use digits or '500m'.")
 
 def select_car(cars, prompt="Select a car"):
-    car_ids = sorted(cars.keys())
-    if not car_ids:
-        print("Database is empty!")
-        return None
+    # preserve ordering provided by load_data (sorted by brand+model)
+    car_ids = list(cars.keys())
+    if not car_ids: return None
 
     print(f"\n{prompt}:")
     for i, cid in enumerate(car_ids):
-        c = cars[cid]
-        print(f"  {i+1}. {c['brand']} {c.get('model', cid)}")
+        print(f"  {i+1}. {cars[cid]['brand']} {cars[cid].get('model', cid)}")
 
     while True:
-        choice = get_input(f"Enter number (1-{len(car_ids)})")
-        try:
-            if not choice: continue
-            idx = int(choice) - 1
-            if 0 <= idx < len(car_ids):
-                return car_ids[idx]
-        except ValueError:
-            pass
+        choice = ask(f"Enter number (1-{len(car_ids)})")
+        if choice and choice.isdigit() and 1 <= int(choice) <= len(car_ids):
+            return car_ids[int(choice)-1]
         print(f"Invalid. Enter 1-{len(car_ids)}.")
 
-def get_custom_car_wizard():
+def get_wizard_car():
     print("\n--- NEW CAR WIZARD ---")
-    brand = get_input("Brand")
-    model = get_input("Model", "Custom Model")
-
-    price = None
-    while price is None:
-        price = parse_smart_value(get_input("Price (e.g. 500m or 1.2b)"))
-        if price is None: print("Invalid price format.")
-
-    ctype = ""
-    while ctype not in ["ICE", "EV"]:
-        ctype = get_input("Type (ICE/EV)", "ICE").upper()
-
-    cons = get_num("Consumption (L/100km or kWh/100km)", "6.0")
-    maint = get_num("Annual Maintenance (e.g. 8m)", "8000000")
-
-    depr_raw = get_input("Depreciation Rate (optional, e.g. 0.1)", "")
-    depr = float(depr_raw) if depr_raw else None
-
-    return {
-        "brand": brand, "price": price, "type": ctype,
-        "consumption": cons, "annual_maintenance": maint,
-        "depreciation_rate": depr,
-    }
+    data = {"brand": ask("Brand"), "model": ask("Model", "Custom")}
+    data["price"] = ask("Price (e.g. 500m)", is_num=True)
+    data["type"] = ask("Type (ICE/HEV/EV)", "ICE").upper()
+    data["consumption"] = ask("Consumption", "6.0", is_num=True)
+    data["annual_maintenance"] = ask("Annual Maintenance", "8000000", is_num=True)
+    depr = ask("Depreciation Rate (optional)", "", is_num=True)
+    data["depreciation_rate"] = depr if depr else None
+    data["seats"] = 5
+    return data
 
 # --- Main Interactive Flow ---
 
@@ -109,6 +84,8 @@ def check_data_recency():
     if delta > DATA_RECENCY_DAYS:
         print(f"  [!] Market data may be outdated (last updated {LAST_UPDATED}).\n"
               f"      Update src/config.py with current prices.\n")
+
+# --- Interactive Mode ---
 
 def interactive_mode(cars):
     print_header()
@@ -119,53 +96,55 @@ def interactive_mode(cars):
           "4. List All Cars\n"
           "5. Exit")
 
-    choice = get_input("Action", "1")
+    cmd = ask("Action", "1")
+    if cmd == "5": return
 
-    if choice == "5": return
-
-    if choice == "4":
+    if cmd == "4":
         print_car_list(cars)
-        input("\nPress Enter to return to menu...")
+        ask("Press Enter to return...")
         return interactive_mode(cars)
 
-    # Common params — area tier is auto-detected from city/province name
-    city = get_input("City/Province", "hanoi")
+    city = ask("City/Province", "hanoi")
     area = get_area_tier(city)
     if area == 2:
         print("\n  Is this location a City/Town (Area 2) or a Rural District (Area 3)?")
-        print("    1. Provincially-governed City or Town [Default]")
-        print("    2. Rural District or Commune")
-        sub_choice = get_input("  Selection", "1")
-        if sub_choice == "2":
-            area = 3
+        print("    1. City/Town [Default]\n    2. Rural District")
+        if ask("  Selection", "1") == "2": area = 3
 
-    area_labels = {1: "Area 1 (Central City)", 2: "Area 2 (Province)", 3: "Area 3 (Rural)"}
-    print(f"  → {city.title()} → {area_labels[area]}")
+    print(f"  → {city.title()} → {area} (Tier)")
+    km = int(ask("Annual KM", "15000", is_num=True))
+    years = int(ask("Years of ownership", "5", is_num=True))
+    ratio = ask("  Enter City Driving % (0-100)", "30", is_num=True) / 100.0
+    show_opp = ask("  Include Capital Opportunity Cost? (y/n)", "y").lower() == 'y'
 
-    km = int(parse_smart_value(get_input("Annual KM", "15000")))
-    years = int(get_input("Years of ownership", "5"))
-
-    if choice == "1":
+    # --- Action Dispatchers ---
+    def run_single():
         cid = select_car(cars)
         if cid:
-            print_result(cid, years, get_tco(cars[cid], city, km, years, area=area))
-    elif choice == "2":
+            res = get_tco(cars[cid], city, km, years, area=area, city_ratio=ratio)
+            print_result(cid, years, res, show_opp=show_opp)
+
+    def run_compare():
         c1, c2 = select_car(cars, "Car 1"), select_car(cars, "Car 2")
         if c1 and c2:
-            print_comparison(c1, get_tco(cars[c1], city, km, years, area=area),
-                             c2, get_tco(cars[c2], city, km, years, area=area))
-    elif choice == "3":
-        car = get_custom_car_wizard()
-        print_result(car["brand"], years, get_tco(car, city, km, years, area=area))
+            r1 = get_tco(cars[c1], city, km, years, area=area, city_ratio=ratio)
+            r2 = get_tco(cars[c2], city, km, years, area=area, city_ratio=ratio)
+            print_comparison(c1, r1, c2, r2, show_opp=show_opp)
 
-    cont = get_input("\nRun another calculation? (y/n)", "y")
-    if cont.lower() == 'y':
+    def run_wizard():
+        car = get_wizard_car()
+        res = get_tco(car, city, km, years, area=area, city_ratio=ratio)
+        print_result(car["brand"], years, res, show_opp=show_opp)
+
+    # Dispatch Routing
+    actions = {"1": run_single, "2": run_compare, "3": run_wizard}
+    if cmd in actions: actions[cmd]()
+
+    if ask("\nRun another calculation? (y/n)", "y").lower() == 'y':
         return interactive_mode(cars)
 
-# --- CLI ---
-
 def main():
-    parser = argparse.ArgumentParser(description="ViDrive TCO Calculator")
+    parser = argparse.ArgumentParser()
     parser.add_argument("--city", default="hanoi")
     parser.add_argument("--km", type=float, default=15000)
     parser.add_argument("--years", type=int, default=5)
@@ -186,6 +165,9 @@ def main():
         if c1 in cars and c2 in cars:
             print_comparison(c1, get_tco(cars[c1], args.city, args.km, args.years),
                              c2, get_tco(cars[c2], args.city, args.km, args.years))
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     main()

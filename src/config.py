@@ -1,8 +1,8 @@
 from datetime import date
 
-# --- Fuel Prices (9-month weighted average, April 2026) ---
+# --- Fuel Prices (9-month weighted average, Apr 2026) ---
 PETROL_PRICE_VND = 23850   # RON 95-III
-EV_CHARGING_PRICE_VND = 2150  # Weighted 5-year avg reflecting 2027 promo
+EV_CHARGING_PRICE_VND = 2150  # 5-year weighted avg incl. 2027 promo end
 
 # --- Registration ---
 ICE_REGISTRATION_RATE_STANDARD = 0.10
@@ -11,14 +11,14 @@ EV_EXEMPTION_END_DATE = date(2027, 2, 28)
 EV_POST_EXEMPTION_DISCOUNT = 0.50
 
 # --- Area Classification (6 Cities, 28 Provinces) ---
-# Area 1: Centrally Governed Cities - 20M plate, 12% reg tax
+# Area 1: Central cities — 20M plate, 12% reg tax
 AREA1_CITIES = {
     "hanoi", "hn", "ha noi",
     "ho chi minh", "hcmc", "saigon",
     "hue", "da nang", "can tho", "hai phong",
 }
 
-# Area 2: Provincial capitals & urban districts
+# Area 2: Provincial capitals and urban districts
 AREA2_PROVINCES = {
     "an giang", "bac ninh", "ca mau", "cao bang",
     "dak lak", "dien bien", "dong nai", "dong thap",
@@ -40,9 +40,10 @@ def get_area_tier(city: str) -> int:
 
 # --- On-Road Fees ---
 PLATE_FEES = {1: 20_000_000, 2: 1_000_000, 3: 200_000}
-INSPECTION_FEE = 340_000
+INSPECTION_FEE = 290_000
 ROAD_MAINTENANCE_FEE_YEARLY = 1_560_000
-CIVIL_INSURANCE_YEARLY = 480_700
+CIVIL_INSURANCE_UNDER_6 = 437_000
+CIVIL_INSURANCE_6_TO_11 = 794_000
 
 # --- Maintenance ---
 EV_MAINTENANCE_DISCOUNT = 0.70
@@ -50,11 +51,43 @@ MAINTENANCE_MAJOR_KM = 40_000
 MAINTENANCE_MAJOR_COST_ICE = 5_000_000
 MAINTENANCE_MAJOR_COST_EV = 1_500_000
 
-# --- Depreciation ---
+# --- Market Research Factors (v0.4.0) ---
+SAVINGS_INTEREST_RATE = 0.065   # 6.5% APR, 12-month VND savings
+# Format: "Type": (freeway_multiplier, city_multiplier)
+TRAFFIC_EFFICIENCY_MAP = {
+    "ICE": (0.85, 1.42), # Real-world avg (e.g. ~11L for B-SUV in city)
+    "HEV": (1.05, 0.95), # Verified (<5% variance)
+    "EV":  (1.12, 0.90)  # Calibrated for 80-100 km/h highway speeds
+}
+HYDRO_RISK_ESTIMATE = 120_000_000  # Avg hydrostatic lock repair cost
+
+BRAND_LIQUIDITY_MAP = {
+    "Toyota": "Tier 1", "Honda": "Tier 1", "Mitsubishi": "Tier 1",
+    "Hyundai": "Tier 1", "Kia": "Tier 1", "Mazda": "Tier 1",
+    "Nissan": "Tier 2", "Suzuki": "Tier 2",
+    "Ford": "Tier 2", "VinFast": "Tier 2"
+}
+
+# [v0.4.0] Segment-Aware Depreciation Multipliers
+SEGMENT_DEPRECIATION_MAP = {
+    "B-Sedan":   {"decay_adj": 1.10}, 
+    "C-Sedan":   {"decay_adj": 1.35}, # Softened to fix Mazda 3
+    "B-SUV":     {"decay_adj": 1.00}, 
+    "C-SUV":     {"decay_adj": 1.15}, 
+    "D-SUV":     {"decay_adj": 1.15}, # Balanced for Santa Fe/Everest
+    "MPV":       {"decay_adj": 0.95}, 
+    "Pickup":    {"decay_adj": 0.88}, # Tightened for Triton
+    "EV-Mini":   {"decay_adj": 1.00}, 
+}
+
+# --- Depreciation (Resale Engine) ---
 # V(t) = P * (1 - y1_drop) * (1 - annual_decay)^(t-1)
+# Calibrated against 2026 market data (Chotot, Bonbanh, Anycar)
 DEPRECIATION_EQ_PARAMS = {
-    "ice":        {"y1_drop": 0.15, "annual_decay": 0.094},
-    "vinfast_ev": {"y1_drop": 0.10, "annual_decay": 0.070},
+    "Tier 1":    {"y1_drop": 0.07, "annual_decay": 0.055}, # Toyota/Honda/Hyundai/Kia/Mazda/Mitsubishi
+    "Tier 2":    {"y1_drop": 0.12, "annual_decay": 0.055}, # Ford/Nissan/Suzuki/VinFast
+    "Tier 3":    {"y1_drop": 0.25, "annual_decay": 0.090}, # Unlisted brands
+    "EV_Market": {"y1_drop": 0.10, "annual_decay": 0.075}, # Stabilized 2026 EV market
 }
 DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 
