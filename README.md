@@ -38,6 +38,7 @@ Follow the on-screen prompts to select/add your vehicle and input your variables
 
 ## Coming Soon
 * **CSV/PDF Export:** Generation of raw data or reports for non-technical users.
+* **Vietnamese support:** This app is as close to ready as the casual buyer needs now, so it's time I finally make it accessible to the right people
 
 ---
 
