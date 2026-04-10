@@ -1,5 +1,25 @@
 from src.config import *
 from datetime import date
+import json
+from pathlib import Path
+
+def get_area_tier(city: str) -> int:
+    key = city.lower().strip()
+    if key in AREA1_CITIES: return 1
+    if key in AREA2_PROVINCES: return 2
+    return 2
+
+def load_data():
+    cars_file = Path(__file__).parent.parent / "data" / "cars.json"
+    if not cars_file.exists(): return {}
+    with cars_file.open('r', encoding='utf-8') as f:
+        raw = json.load(f) or {}
+    try:
+        sorted_items = sorted(raw.items(), key=lambda kv: (kv[1].get('brand', '').lower(), kv[1].get('model', '').lower()))
+        return dict(sorted_items)
+    except Exception:
+        return raw
+
 
 def calculate_registration(price, city, car_type, purchase_date=None, area=None):
     """Registration tax + plate fee, auto-resolved by area tier."""
@@ -7,7 +27,7 @@ def calculate_registration(price, city, car_type, purchase_date=None, area=None)
         area = get_area_tier(city)
     tax_rate = ICE_REGISTRATION_RATE_CENTRAL_CITY if area == 1 else ICE_REGISTRATION_RATE_STANDARD
 
-    if car_type == "ICE":
+    if car_type in ["ICE", "ICE-D", "HEV"]:
         tax = price * tax_rate
     elif car_type == "EV":
         today = purchase_date or date.today()
@@ -32,7 +52,13 @@ def calculate_fuel_cost(km, consumption, car_type, city_ratio=0.0):
     final_mult = freeway_mult + (city_mult - freeway_mult) * city_ratio
     adjusted_consumption = consumption * final_mult
     
-    price = PETROL_PRICE_VND if car_type in ["ICE", "HEV"] else EV_CHARGING_PRICE_VND
+    if car_type in ["ICE", "HEV"]:
+        price = PETROL_PRICE_VND
+    elif car_type == "ICE-D":
+        price = DIESEL_PRICE_VND
+    else:
+        price = EV_CHARGING_PRICE_VND
+        
     return (km / 100) * adjusted_consumption * price
 
 def calculate_opportunity_cost(principal, years, rate=SAVINGS_INTEREST_RATE):
@@ -42,7 +68,6 @@ def calculate_opportunity_cost(principal, years, rate=SAVINGS_INTEREST_RATE):
 
 def get_hydro_risk_info(city):
     """Returns flood risk metadata based on city location."""
-    area = get_area_tier(city)
     is_high_risk = city.lower().strip() in ["hanoi", "hn", "ho chi minh", "hcmc", "saigon"]
     return {
         "is_high_risk": is_high_risk,
@@ -54,33 +79,52 @@ def calculate_maintenance(km, car_type, base_cost=8_000_000, years=1):
     annual = base_cost * (EV_MAINTENANCE_DISCOUNT if car_type == "EV" else 1.0)
     total = annual * years
     milestones = (km * years) // MAINTENANCE_MAJOR_KM
-    cost = MAINTENANCE_MAJOR_COST_EV if car_type == "EV" else MAINTENANCE_MAJOR_COST_ICE
+    if car_type == "EV":
+        cost = MAINTENANCE_MAJOR_COST_EV
+    elif car_type == "ICE-D":
+        cost = MAINTENANCE_MAJOR_COST_ICE_D
+    else:
+        cost = MAINTENANCE_MAJOR_COST_ICE
+        
     return total + milestones * cost
 
-def calculate_resale(price, years, car_type, rate=None, brand=None, segment=None, liquidity_bonus=1.0):
-    """[v0.4.0] Data-driven geometric decay models."""
-    if years == 0:
-        return price
-        
-    if rate is not None:
-        initial_drop = rate + DEPRECIATION_SHOWROOM_EXIT_PENALTY
-        return price * (1 - initial_drop) * ((1 - rate) ** (years - 1))
+def resolve_liquidity_bonus(brand, car_type, segment):
+    """Encapsulates the 'Bespoke Logic' for market demand multipliers."""
+    if car_type == "HEV":
+        return LIQUIDITY_LOGIC_MAP["HEV"]
+    
+    tier = BRAND_LIQUIDITY_MAP.get(brand, "Tier 3")
+    
+    if car_type == "EV":
+        return LIQUIDITY_LOGIC_MAP["EV"].get(brand, LIQUIDITY_LOGIC_MAP["EV"]["Default"])
+    
+    # Tier-based Segment Logic
+    tier_logic = LIQUIDITY_LOGIC_MAP.get(tier, LIQUIDITY_LOGIC_MAP["Tier 3"])
+    return tier_logic.get(segment, tier_logic.get("Default", 1.0))
 
-    # 1. Resolve base category
+def calculate_resale(price, brand, years, car_type, segment, annual_km=15000, custom_rate=None):
+    """Calculates residual value using engine-resolved class liquidity bonus.
+    If custom_rate is provided (from wizard), uses it as a flat annual decay."""
+    if years == 0: return price
+
+    if custom_rate is not None:
+        # Wizard path: flat annual decay, no showroom or bonus adjustments
+        return price * ((1 - custom_rate) ** years)
+
+    # Parametric path
     tier_label = BRAND_LIQUIDITY_MAP.get(brand, "Tier 3")
     category = "EV_Market" if car_type == "EV" else tier_label
-    
-    # 2. Segment Adjustment from metadata
     seg_adj = SEGMENT_DEPRECIATION_MAP.get(segment, {}).get("decay_adj", 1.0)
-
     params = DEPRECIATION_EQ_PARAMS.get(category, DEPRECIATION_EQ_PARAMS["Tier 3"])
-    
-    # 3. Apply adjusted decay
     decay = params["annual_decay"] * seg_adj
+
+    # Extra 1.5% loss per 10k km over 15k/yr
+    usage_penalty = max(0, (annual_km - 15000) / 10000) * 0.015
+    decay += usage_penalty
+
     retention = (1 - params["y1_drop"]) * ((1 - decay) ** (years - 1))
-    
-    # 4. Apply per-model Liquidity Bonus from metadata
-    retention *= (liquidity_bonus or 1.0)
+    bonus = resolve_liquidity_bonus(brand, car_type, segment)
+    retention *= bonus
 
     return price * retention
 
@@ -98,15 +142,14 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
     insurance = insurance_rate * years
     operating = fuel + maint + road_fees + insurance
 
-    # Pass new data-driven parameters to the resale engine
     resale = calculate_resale(
-        price, 
-        years, 
-        car["type"], 
-        rate=car.get("depreciation_rate"), 
-        brand=car.get("brand"),
-        segment=car.get("segment"),
-        liquidity_bonus=car.get("liquidity_bonus", 1.0)
+        price,
+        car["brand"],
+        years,
+        car["type"],
+        car.get("segment", "C-Sedan"),
+        annual_km=km,
+        custom_rate=car.get("depreciation_rate")
     )
     depreciation = price - resale
 

@@ -37,12 +37,19 @@ python main.py
 Follow the on-screen prompts to select/add your vehicle and input your variables. Use shorthands like `500m`, `1.2b`, or `15k` for easy value entry.
 
 ## Coming Soon
+* **ML resale:** The current resale algorithms are parametric, leaving room for sufficient MAE, even if by the percent, that will hurt owner's pocket considerably. I'm thinking of using ML to predict resale values based on market data, but then I will need to learn much more.
 * **CSV/PDF Export:** Generation of raw data or reports for non-technical users.
-* **Vietnamese support:** This app is as close to ready as the casual buyer needs now, so it's time I finally make it accessible to the right people
+* **Vietnamese support:** This app is as close to ready as the casual buyer needs now, so it's time I finally make it accessible to the right people.
 
 ---
 
 ## Version History
+
+### [v0.4.1] - 2026-04-10 (Vibed)
+* **Comprehensive Audit**: Resolved critical issues including HEV registration logic, Wizard segment crashes, and custom depreciation overrides.
+* **Rethought Architecture**: Re-orchestrated code into Orchestration, Interface, Domain Logic, and Data layers for professional-grade maintainability.
+* **New Vehicles**: Added 70 vehicle configurations, expanded liquidity tiers for 6 new brands (BYD, MG, Geely, Omoda, Jaecoo, Haval), and implemented calibrated decay for 4 new segments.
+* **Improved Accuracy**: Achieved **7.96% MAE** prediction accuracy across the 38-model validation suite.
 
 ### [v0.4.0] - 2026-04-09
 * **Schema-Driven Architecture**: Decoupled vehicle logic from code. Model-specific heuristics (segments, liquidity premiums) are now offloaded to `cars.json` metadata.

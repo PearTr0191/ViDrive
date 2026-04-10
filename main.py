@@ -1,8 +1,6 @@
-from pathlib import Path
-import sys, json, argparse
-from datetime import date
+import sys, argparse
 
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.4.1"
 
 if sys.stdout.encoding != 'utf-8' and hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
@@ -11,84 +9,9 @@ from src.config import *
 from src.calculations import *
 from src.cli import *
 
-ROOT_DIR = Path(__file__).parent
-CARS_FILE = ROOT_DIR / "data" / "cars.json"
-
-def load_data():
-    if not CARS_FILE.exists():
-        print(f"Error: Database file not found at {CARS_FILE}")
-        return {}
-    with CARS_FILE.open('r', encoding='utf-8') as f:
-        raw = json.load(f) or {}
-
-    # Return a dict ordered alphabetically by brand then model for consistent UI ordering
-    try:
-        sorted_items = sorted(
-            raw.items(),
-            key=lambda kv: (kv[1].get('brand', '').lower(), kv[1].get('model', '').lower())
-        )
-        return dict(sorted_items)
-    except Exception:
-        return raw
-
-# --- Input Helpers ---
-
-def parse_val(text):
-    if not text: return None
-    text = text.lower().strip().replace(",", "")
-    mult = {'k': 1_000, 'm': 1_000_000, 'b': 1_000_000_000}
-    try:
-        return float(text[:-1]) * mult[text[-1]] if text[-1] in mult else float(text)
-    except: return None
-
-def ask(prompt, default=None, is_num=False):
-    disp = f"{prompt} [{default}]: " if default else f"{prompt}: "
-    while True:
-        val = input(disp).strip() or default
-        if not is_num: return val
-        num = parse_val(str(val))
-        if num is not None: return num
-        print("Invalid number format. Use digits or '500m'.")
-
-def select_car(cars, prompt="Select a car"):
-    # preserve ordering provided by load_data (sorted by brand+model)
-    car_ids = list(cars.keys())
-    if not car_ids: return None
-
-    print(f"\n{prompt}:")
-    for i, cid in enumerate(car_ids):
-        print(f"  {i+1}. {cars[cid]['brand']} {cars[cid].get('model', cid)}")
-
-    while True:
-        choice = ask(f"Enter number (1-{len(car_ids)})")
-        if choice and choice.isdigit() and 1 <= int(choice) <= len(car_ids):
-            return car_ids[int(choice)-1]
-        print(f"Invalid. Enter 1-{len(car_ids)}.")
-
-def get_wizard_car():
-    print("\n--- NEW CAR WIZARD ---")
-    data = {"brand": ask("Brand"), "model": ask("Model", "Custom")}
-    data["price"] = ask("Price (e.g. 500m)", is_num=True)
-    data["type"] = ask("Type (ICE/HEV/EV)", "ICE").upper()
-    data["consumption"] = ask("Consumption", "6.0", is_num=True)
-    data["annual_maintenance"] = ask("Annual Maintenance", "8000000", is_num=True)
-    depr = ask("Depreciation Rate (optional)", "", is_num=True)
-    data["depreciation_rate"] = depr if depr else None
-    data["seats"] = 5
-    return data
-
-# --- Main Interactive Flow ---
-
-def check_data_recency():
-    delta = (date.today() - LAST_UPDATED).days
-    if delta > DATA_RECENCY_DAYS:
-        print(f"  [!] Market data may be outdated (last updated {LAST_UPDATED}).\n"
-              f"      Update src/config.py with current prices.\n")
-
-# --- Interactive Mode ---
-
 def interactive_mode(cars):
     print_header()
+    check_data_recency()
     print("Welcome! What would you like to do?\n"
           "1. View Costs for 1 Car\n"
           "2. Compare 2 Cars\n"
@@ -165,9 +88,6 @@ def main():
         if c1 in cars and c2 in cars:
             print_comparison(c1, get_tco(cars[c1], args.city, args.km, args.years),
                              c2, get_tco(cars[c2], args.city, args.km, args.years))
-
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()
