@@ -1,9 +1,9 @@
 from datetime import date
 
-# --- Fuel Prices (9-month weighted average, Apr 2026) ---
-PETROL_PRICE_VND = 23850   # RON 95-III
-DIESEL_PRICE_VND = 21850   # 9-month weighted average (Jul 2025 - Mar 2026)
-EV_CHARGING_PRICE_VND = 2150  # 5-year weighted avg incl. 2027 promo end
+# --- Fuel Prices (VND/liter, May 2026) ---
+PETROL_PRICE_VND = 24150   # RON 95-III (May 28 2026 adjustment)
+DIESEL_PRICE_VND = 27651   # DO 0.05S-II (May 30 2026 adjustment)
+EV_CHARGING_PRICE_VND = 3858  # V-Green standard rate (since Mar 2024)
 
 # --- Registration ---
 ICE_REGISTRATION_RATE_STANDARD = 0.10
@@ -31,7 +31,10 @@ AREA2_PROVINCES = {
 }
 
 # --- On-Road Fees ---
-PLATE_FEES = {1: 20_000_000, 2: 1_000_000, 3: 200_000}
+# Thong tu 155/2025/TT-BTC, effective Jan 1 2026
+# Area 1: Hanoi, HCMC, Da Nang, Hue, Can Tho, Hai Phong
+# Area 2/3: remaining provinces (unified rate)
+PLATE_FEES = {1: 14_000_000, 2: 140_000, 3: 140_000}
 INSPECTION_FEE = 290_000
 ROAD_MAINTENANCE_FEE_YEARLY = 1_560_000
 CIVIL_INSURANCE_UNDER_6 = 437_000
@@ -116,5 +119,5 @@ DEPRECIATION_EQ_PARAMS = {
 }
 DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 
-LAST_UPDATED = date(2026, 4, 4)
+LAST_UPDATED = date(2026, 5, 31)
 DATA_RECENCY_DAYS = 270
