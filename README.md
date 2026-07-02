@@ -45,6 +45,10 @@ Follow the on-screen prompts to select/add your vehicle and input your variables
 
 ## Version History
 
+### [v0.4.2] - 2026-07-02
+* **Added Vietnamese support**.
+* **More intuitive default**: While the lost opportunity costs feature provides an insightful data point, defaulting to including them in the final calculations (TCO -> True Financial Impact) is causing confusion among the testers. Therefore, this option now defaults to no.
+
 ### [v0.4.1] - 2026-04-10 (Vibed)
 * **Comprehensive Audit**: Resolved critical issues including HEV registration logic, Wizard segment crashes, and custom depreciation overrides.
 * **Rethought Architecture**: Re-orchestrated code into Orchestration, Interface, Domain Logic, and Data layers for professional-grade maintainability.

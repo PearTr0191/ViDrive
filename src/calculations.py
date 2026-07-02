@@ -89,7 +89,7 @@ def calculate_maintenance(km, car_type, base_cost=8_000_000, years=1):
     return total + milestones * cost
 
 def resolve_liquidity_bonus(brand, car_type, segment):
-    """Encapsulates the 'Bespoke Logic' for market demand multipliers."""
+    """'Bespoke Logic' for market demand multipliers."""
     if car_type == "HEV":
         return LIQUIDITY_LOGIC_MAP["HEV"]
     
@@ -129,7 +129,7 @@ def calculate_resale(price, brand, years, car_type, segment, annual_km=15000, cu
     return price * retention
 
 def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.0):
-    """Master TCO: Acquisition + Running - Resale, with market research factors."""
+    """Master TCO: Acquisition + Running - Resale"""
     price = car["price"]
     reg = calculate_registration(price, city, car["type"], purchase_date, area=area)
     on_road = price + reg["total"]
