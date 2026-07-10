@@ -39,7 +39,6 @@ Follow the on-screen prompts to select/add your vehicle and input your variables
 ## Coming Soon
 * **ML resale:** The current resale algorithms are parametric, leaving room for sufficient MAE, even if by the percent, that will hurt owner's pocket considerably. I'm thinking of using ML to predict resale values based on market data, but then I will need to learn much more.
 * **CSV/PDF Export:** Generation of raw data or reports for non-technical users.
-* **Vietnamese support:** This app is as close to ready as the casual buyer needs now, so it's time I finally make it accessible to the right people.
 
 ---
 
