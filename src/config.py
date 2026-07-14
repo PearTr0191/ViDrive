@@ -72,15 +72,18 @@ LIQUIDITY_LOGIC_MAP = {
     "Tier 1": {
         "MPV": 1.05,
         "B-Sedan": 1.05,
+        "B-SUV": 1.03,
         "Default": 1.02
     },
     "Tier 2": {
         "D-SUV": 1.02,
         "Pickup": 1.05,
+        "C-SUV": 1.00,
         "Default": 0.98
     },
     "EV": {
         "VinFast": 0.90,
+        "BYD": 0.85,
         "Default": 0.80
     },
     "Tier 3": {
@@ -90,18 +93,18 @@ LIQUIDITY_LOGIC_MAP = {
 
 # Segment Depreciation Multipliers
 SEGMENT_DEPRECIATION_MAP = {
-    "A-Hatch":   {"decay_adj": 1.10},
-    "B-Hatch":   {"decay_adj": 1.05},
-    "A-SUV":     {"decay_adj": 0.95},
+    "A-Hatch":   {"decay_adj": 1.08},
+    "B-Hatch":   {"decay_adj": 1.03},
+    "A-SUV":     {"decay_adj": 0.93},
     "B-Sedan":   {"decay_adj": 0.85},
-    "C-Sedan":   {"decay_adj": 1.00},
-    "D-Sedan":   {"decay_adj": 1.30},
+    "C-Sedan":   {"decay_adj": 0.98},
+    "D-Sedan":   {"decay_adj": 1.25},
     "B-SUV":     {"decay_adj": 0.82},
     "C-SUV":     {"decay_adj": 0.85},
-    "D-SUV":     {"decay_adj": 1.40},
-    "MPV":       {"decay_adj": 1.15},
-    "Pickup":    {"decay_adj": 1.30},
-    "EV-Mini":   {"decay_adj": 1.00},
+    "D-SUV":     {"decay_adj": 1.35},
+    "MPV":       {"decay_adj": 1.12},
+    "Pickup":    {"decay_adj": 1.25},
+    "EV-Mini":   {"decay_adj": 0.95},
 }
 
 # Supported Wizard Segments
@@ -112,12 +115,12 @@ WIZARD_SEGMENTS = [
 
 # Depreciation Engine
 DEPRECIATION_EQ_PARAMS = {
-    "Tier 1":    {"y1_drop": 0.08, "annual_decay": 0.065},
-    "Tier 2":    {"y1_drop": 0.10, "annual_decay": 0.070},
-    "Tier 3":    {"y1_drop": 0.18, "annual_decay": 0.080},
-    "EV_Market": {"y1_drop": 0.20, "annual_decay": 0.085},
+    "Tier 1":    {"y1_drop": 0.08, "annual_decay": 0.060},
+    "Tier 2":    {"y1_drop": 0.10, "annual_decay": 0.068},
+    "Tier 3":    {"y1_drop": 0.18, "annual_decay": 0.078},
+    "EV_Market": {"y1_drop": 0.20, "annual_decay": 0.082},
 }
 DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 
-LAST_UPDATED = date(2026, 5, 31)
-DATA_RECENCY_DAYS = 270
+LAST_UPDATED = date(2026, 7, 14)
+DATA_RECENCY_DAYS = 60

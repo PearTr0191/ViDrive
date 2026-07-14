@@ -2,6 +2,7 @@ from src.config import *
 from datetime import date
 import json
 from pathlib import Path
+from src.ml_model import get_predictor
 
 def get_area_tier(city: str) -> int:
     key = city.lower().strip()
@@ -103,15 +104,27 @@ def resolve_liquidity_bonus(brand, car_type, segment):
     return tier_logic.get(segment, tier_logic.get("Default", 1.0))
 
 def calculate_resale(price, brand, years, car_type, segment, annual_km=15000, custom_rate=None):
-    """Calculates residual value using engine-resolved class liquidity bonus.
-    If custom_rate is provided (from wizard), uses it as a flat annual decay."""
-    if years == 0: return price
+    """Calculates residual value using ML prediction first, falling back to parametric.
+    Returns (resale_value, logic_tag) tuple where logic_tag is 'ml', 'parametric', or 'custom'."""
+    if years == 0:
+        return price, "parametric"
 
     if custom_rate is not None:
         # Wizard path: flat annual decay, no showroom or bonus adjustments
-        return price * ((1 - custom_rate) ** years)
+        return price * ((1 - custom_rate) ** years), "custom"
 
-    # Parametric path
+    # Try ML prediction first
+    try:
+        predictor = get_predictor()
+        ml_result = predictor.predict_resale(brand, segment, car_type, years, annual_km, price)
+        if ml_result["ml_prediction"] is not None:
+            predicted_pct = ml_result["ml_prediction"]
+            if 0.05 <= predicted_pct <= 1.0:
+                return price * predicted_pct, "ml"
+    except Exception:
+        pass  # Fall through to parametric
+
+    # Parametric path (fallback)
     tier_label = BRAND_LIQUIDITY_MAP.get(brand, "Tier 3")
     category = "EV_Market" if car_type == "EV" else tier_label
     seg_adj = SEGMENT_DEPRECIATION_MAP.get(segment, {}).get("decay_adj", 1.0)
@@ -126,7 +139,7 @@ def calculate_resale(price, brand, years, car_type, segment, annual_km=15000, cu
     bonus = resolve_liquidity_bonus(brand, car_type, segment)
     retention *= bonus
 
-    return price * retention
+    return price * retention, "parametric"
 
 def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.0):
     """Master TCO: Acquisition + Running - Resale"""
@@ -142,7 +155,7 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
     insurance = insurance_rate * years
     operating = fuel + maint + road_fees + insurance
 
-    resale = calculate_resale(
+    resale, resale_logic = calculate_resale(
         price,
         car["brand"],
         years,
@@ -153,7 +166,7 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
     )
     depreciation = price - resale
 
-    # [v0.4.0] Market Research Factors
+    # [v0.5.0] Market Research Factors
     opp_cost = calculate_opportunity_cost(on_road, years)
     liquidity = BRAND_LIQUIDITY_MAP.get(car.get("brand"), "Tier 3 (Niche)")
     hydro = get_hydro_risk_info(city)
@@ -170,7 +183,7 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
         "legal": road_fees + insurance,
         "operating": operating,
         "resale": resale,
-        "resale_logic": "Custom" if car.get("depreciation_rate") else "Parametric",
+        "resale_logic": resale_logic,
         "depreciation": depreciation,
         "opp_cost": opp_cost,
         "liquidity": liquidity,

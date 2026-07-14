@@ -5,8 +5,10 @@ def set_language(lang):
     if lang in TRANSLATIONS:
         _lang = lang
 
-def t(key, **kwargs):
+def t(key: str, **kwargs: str) -> str:
     text = TRANSLATIONS[_lang].get(key, key)
+    if text is None:
+        text = key
     if kwargs:
         return text.format(**kwargs)
     return text
