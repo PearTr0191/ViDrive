@@ -43,7 +43,7 @@ def select_car(cars, prompt=t('prompt_select_car')):
     n = len(car_ids)
     while True:
         choice = ask(t('prompt_number', n=n))
-        if choice and choice.isdigit() and 1 <= int(choice) <= n:
+        if choice and str(choice).isdigit() and 1 <= int(choice) <= n:
             return car_ids[int(choice)-1]
         print(t('prompt_invalid_number', n=n))
 
@@ -51,7 +51,7 @@ def get_wizard_car():
     print(f"\n{t('wizard_title')}")
     data = {"brand": ask(t('wizard_brand')), "model": ask(t('wizard_model'), t('wizard_default_model'))}
     data["price"] = ask(t('wizard_price'), is_num=True)
-    data["type"] = ask(t('wizard_type'), t('wizard_default_type')).upper()
+    data["type"] = str(ask(t('wizard_type'), t('wizard_default_type'))).upper()
     data["consumption"] = ask(t('wizard_consumption'), t('wizard_default_consumption'), is_num=True)
     data["annual_maintenance"] = ask(t('wizard_annual_maint'), t('wizard_default_annual_maint'), is_num=True)
     data["seats"] = int(ask(t('wizard_seats'), "5", is_num=True))
@@ -61,7 +61,7 @@ def get_wizard_car():
     n_seg = len(WIZARD_SEGMENTS)
     while True:
         seg_choice = ask(t('wizard_segment_prompt', n=n_seg), "1")
-        if seg_choice.isdigit() and 1 <= int(seg_choice) <= n_seg:
+        if str(seg_choice).isdigit() and 1 <= int(seg_choice) <= n_seg:
             data["segment"] = WIZARD_SEGMENTS[int(seg_choice) - 1]
             break
         print(t('wizard_invalid_range', n=n_seg))
