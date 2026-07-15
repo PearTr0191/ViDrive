@@ -19,9 +19,15 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 It is recommended to use a virtual environment:
 
 ```bash
-# Clone the repository
+# Clone the repository (Git LFS required for ML models)
 git clone https://github.com/PearTr0191/ViDrive.git
 cd ViDrive
+
+# Ensure Git LFS is initialized (install from https://git-lfs.com if needed)
+git lfs install
+
+# Pull the ML model files (resale_rf.pkl, resale_gb.pkl), internet connection required.
+git lfs pull
 
 # Setup environment
 python -m venv venv
@@ -30,6 +36,8 @@ pip install -r requirements.txt
 ```
 
 Or if you have no need to be as conscious about your developer environment, just download and extract the .zip :\
+
+> ViDrive uses Git LFS to version the ML model files (`data/models/*.pkl`). Without Git LFS, you will receive pointer files instead of the actual models, and the app will fall back to parametric resale estimation.
 
 ## Usage
 
