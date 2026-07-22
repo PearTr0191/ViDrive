@@ -155,6 +155,9 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
     insurance = insurance_rate * years
     operating = fuel + maint + road_fees + insurance
 
+    # Parking & Toll estimates (scaled by city/highway split)
+    parking_toll = calculate_parking_toll(area or get_area_tier(city), years, city_ratio)
+
     resale, resale_logic = calculate_resale(
         price,
         car["brand"],
@@ -182,6 +185,7 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
         "maint": maint,
         "legal": road_fees + insurance,
         "operating": operating,
+        "parking_toll": parking_toll,
         "resale": resale,
         "resale_logic": resale_logic,
         "depreciation": depreciation,
@@ -191,4 +195,62 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
         "tco": tco,
         "true_financial_impact": tco + opp_cost,
         "monthly": operating / (years * 12),
+    }
+
+
+def calculate_parking_toll(area: int, years: int, city_ratio: float = 0.0) -> dict:
+    """
+    Calculate parking & toll estimates based on area tier and city/highway split.
+    - Parking scales with city driving (city_ratio)
+    - Tolls scale with highway driving (1 - city_ratio)
+    """
+    area_key = f"area{area}" if area in (1, 2, 3) else "area2"
+    estimates = PARKING_TOLL_ESTIMATES.get(area_key, PARKING_TOLL_ESTIMATES["area2"])
+    
+    # Scale parking by city driving, tolls by highway driving
+    parking_monthly = estimates["parking_monthly"] * (0.5 + city_ratio)
+    toll_monthly = estimates["toll_monthly"] * (1.5 - city_ratio)
+    
+    monthly_total = parking_monthly + toll_monthly
+    total_over_period = monthly_total * 12 * years
+    
+    return {
+        "monthly_parking": parking_monthly,
+        "monthly_toll": toll_monthly,
+        "monthly_total": monthly_total,
+        "total_over_period": total_over_period,
+    }
+
+
+def calculate_loan_schedule(on_road_price: float, down_pct: float, annual_rate: float, term_years: int) -> dict:
+    """
+    Calculate loan schedule using reducing balance method (standard in Vietnam).
+    Returns monthly payment, total interest, total repayment, and effective cost.
+    """
+    if down_pct <= 0 or down_pct >= 100:
+        down_pct = 30.0
+    
+    loan_amount = on_road_price * (1 - down_pct / 100)
+    monthly_rate = annual_rate / 12
+    num_payments = term_years * 12
+    
+    if monthly_rate == 0:
+        monthly_payment = loan_amount / num_payments
+    else:
+        # Standard reducing balance formula
+        monthly_payment = loan_amount * monthly_rate * (1 + monthly_rate) ** num_payments / ((1 + monthly_rate) ** num_payments - 1)
+    
+    total_repayment = monthly_payment * num_payments
+    total_interest = total_repayment - loan_amount
+    effective_cost = on_road_price + total_interest  # Cash price + financing cost
+    
+    return {
+        "loan_amount": loan_amount,
+        "down_payment": on_road_price * down_pct / 100,
+        "monthly_payment": monthly_payment,
+        "total_interest": total_interest,
+        "total_repayment": total_repayment,
+        "effective_cost": effective_cost,
+        "term_months": num_payments,
+        "annual_rate": annual_rate,
     }

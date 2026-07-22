@@ -122,5 +122,16 @@ DEPRECIATION_EQ_PARAMS = {
 }
 DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 
+# --- Parking & Toll Estimates (Monthly, VND) ---
+# Based on city/highway driving split: tolls scale with highway km, parking with city km
+# Area 1: Major city centers (Hanoi/HCMC core) - high parking, high tolls
+# Area 2: City/Town - moderate parking, moderate tolls  
+# Area 3: Rural/District - low parking, minimal tolls
+PARKING_TOLL_ESTIMATES = {
+    "area1": {"parking_monthly": 1_200_000, "toll_monthly": 600_000},
+    "area2": {"parking_monthly": 400_000,   "toll_monthly": 200_000},
+    "area3": {"parking_monthly": 100_000,   "toll_monthly": 50_000},
+}
+
 LAST_UPDATED = date(2026, 7, 14)
 DATA_RECENCY_DAYS = 60

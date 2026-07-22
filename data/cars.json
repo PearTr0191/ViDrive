@@ -571,7 +571,7 @@
   },
   "mgzs_2026": {
     "brand": "MG",
-    "model": "MG ZS LUX+",
+    "model": "ZS LUX+",
     "price": 588000000,
     "type": "ICE",
     "seats": 5,
@@ -581,7 +581,7 @@
   },
   "mghs_2026": {
     "brand": "MG",
-    "model": "MG HS Trophy",
+    "model": "HS Trophy",
     "price": 749000000,
     "type": "ICE",
     "seats": 5,
@@ -591,7 +591,7 @@
   },
   "omodac5_2026": {
     "brand": "Omoda",
-    "model": "Omoda C5 1.5T",
+    "model": "C5 1.5T",
     "price": 599000000,
     "type": "ICE",
     "seats": 5,
@@ -601,7 +601,7 @@
   },
   "jaecoo7_2026": {
     "brand": "Jaecoo",
-    "model": "Jaecoo 7 PHEV",
+    "model": "7 PHEV",
     "price": 879000000,
     "type": "HEV",
     "seats": 5,
@@ -611,7 +611,7 @@
   },
   "havalh6_2026": {
     "brand": "Haval",
-    "model": "Haval H6 HEV",
+    "model": "H6 HEV",
     "price": 986000000,
     "type": "HEV",
     "seats": 5,
@@ -621,7 +621,7 @@
   },
   "ex2_2026": {
     "brand": "Geely",
-    "model": "Geely EX2 Max",
+    "model": "EX2 Max",
     "price": 499000000,
     "type": "EV",
     "seats": 5,
@@ -631,7 +631,7 @@
   },
   "ex5_2026": {
     "brand": "Geely",
-    "model": "Geely EX5 EM-i",
+    "model": "EX5 EM-i",
     "price": 969000000,
     "type": "HEV",
     "seats": 5,
