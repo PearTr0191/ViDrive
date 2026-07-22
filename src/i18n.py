@@ -5,7 +5,7 @@ def set_language(lang):
     if lang in TRANSLATIONS:
         _lang = lang
 
-def t(key: str, **kwargs: str) -> str:
+def t(key: str, **kwargs: object) -> str:
     text = TRANSLATIONS[_lang].get(key, key)
     if text is None:
         text = key
@@ -20,7 +20,7 @@ TRANSLATIONS = {
         'choose_language': 'Choose language / Chọn ngôn ngữ (en/vi) (vi)',
         'welcome_msg': 'Welcome! What would you like to do?',
         'menu_1_car': '1. View Costs for 1 Car',
-        'menu_compare': '2. Compare 2 Cars',
+        'menu_compare': '2. Compare Cars',
         'menu_wizard': '3. Enter a Custom Car',
         'menu_list': '4. List All Cars',
         'menu_exit': '5. Exit',
@@ -50,7 +50,7 @@ TRANSLATIONS = {
         'prompt_area_q': '\n  Is this location a City/Town (Area 2) or a Rural District (Area 3)?',
         'prompt_area_opts': '    1. City/Town [Default]\n    2. Rural District',
         'prompt_area_sel': '  Selection',
-        'prompt_area_result': '  \u2192 {city} \u2192 Tier {area}',
+        'prompt_area_result': '  → {city} → Tier {area}',
         'prompt_annual_km': 'Annual KM',
         'prompt_years': 'Years of ownership',
         'prompt_city_ratio': '  Enter City Driving % (0-100)',
@@ -58,11 +58,28 @@ TRANSLATIONS = {
         'prompt_select_car': 'Select a car',
         'prompt_car_1': 'Car 1',
         'prompt_car_2': 'Car 2',
+        'prompt_car_3': 'Car 3 (optional, press Enter to skip)',
         'prompt_number': 'Enter number (1-{n})',
         'prompt_invalid_number': 'Invalid. Enter 1-{n}.',
         'prompt_press_enter': 'Press Enter to return...',
         'prompt_run_again': '\nRun another calculation?',
         'input_invalid_num': "Invalid number format. Use digits or '500m'.",
+        'prompt_export_pdf': 'Export to PDF?',
+        'pdf_exported': 'PDF exported: {file}',
+        'pdf_error': 'PDF export failed',
+        'prompt_loan_calc': 'Want to calculate a loan plan?',
+        'prompt_down_payment': 'Down payment %',
+        'prompt_interest_rate': 'Interest rate % (annual)',
+        'prompt_loan_term': 'Loan term (years)',
+        'section_loan': '4. LOAN / FINANCING PLAN',
+        'label_loan_monthly': 'Monthly Payment',
+        'label_loan_total_interest': 'Total Interest Paid',
+        'label_loan_total_repayment': 'Total Repayment',
+        'label_loan_effective_cost': 'Effective Cost (with Loan)',
+        'label_parking_toll': 'Parking & Tolls (est.)',
+        'label_parking_monthly': 'Monthly Parking',
+        'label_toll_monthly': 'Monthly Toll',
+        'menu_compare': '2. Compare Multiple Cars',
 
         # Car list header
         'list_header': '{0:<15} {1:<10} {2:<20} {3:>15} {4:>12}',
@@ -106,7 +123,7 @@ TRANSLATIONS = {
         'label_brand_liquidity': 'Brand Liquidity',
 
         # Comparison
-        'compare_title': 'COMPARISON: {c1} vs {c2}',
+        'comparison_title': 'COMPARISON: {c1} vs {c2}',
         'compare_header': '{0:<25} {1:>22} {2:>22}',
         'compare_verdict': 'VERDICT: {winner} is MORE ECONOMICAL by {diff}',
         'compare_hydro_risk': 'Hydro-Risk (Flood)',
@@ -116,6 +133,16 @@ TRANSLATIONS = {
         'resale_logic_custom': 'Custom',
         'resale_logic_parametric': 'Parametric',
         'resale_logic_ml': 'ML Model',
+
+        # Liquidity / Tiers
+        'tier_1': 'Tier 1 (High Liquidity)',
+        'tier_2': 'Tier 2',
+        'tier_3': 'Tier 3 (Niche Market)',
+
+        # Missing keys
+        'label_resale_method': 'Resale Method',
+        'prompt_skip': 'Press Enter to skip',
+        'prompt_duplicate_car': '  That car is already selected. Choose a different one.',
     },
 
     'vi': {
@@ -124,7 +151,7 @@ TRANSLATIONS = {
         'choose_language': 'Choose language / Chọn ngôn ngữ (en/vi) (vi)',
         'welcome_msg': 'Chào bạn! Bạn muốn làm gì?',
         'menu_1_car': '1. Xem chi phí cho 1 xe (Tính TCO)',
-        'menu_compare': '2. So sánh 2 xe',
+        'menu_compare': '2. So sánh xe',
         'menu_wizard': '3. Thêm xe mới / Nhập thông tin',
         'menu_list': '4. Danh sách xe',
         'menu_exit': '5. Thoát',
@@ -154,7 +181,7 @@ TRANSLATIONS = {
         'prompt_area_q': '\n  Bạn ở nội thành (Khu vực 2) hay ngoại thành (Khu vực 3)?',
         'prompt_area_opts': '    1. Nội thành (Khu vực 2) [Mặc định]\n    2. Ngoại thành (Khu vực 3)',
         'prompt_area_sel': '  Lựa chọn',
-        'prompt_area_result': '  \u2192 {city} \u2192 Khu vực {area}',
+        'prompt_area_result': '  → {city} → Khu vực {area}',
         'prompt_annual_km': 'Số km/năm',
         'prompt_years': 'Số năm sở hữu',
         'prompt_city_ratio': '  Tỷ lệ km chạy trong đô thị (%) (0-100)',
@@ -162,11 +189,26 @@ TRANSLATIONS = {
         'prompt_select_car': 'Chọn xe',
         'prompt_car_1': 'Xe 1',
         'prompt_car_2': 'Xe 2',
+        'prompt_car_3': 'Xe 3 (tùy chọn, nhấn Enter để bỏ qua)',
         'prompt_number': 'Nhập số (1-{n})',
         'prompt_invalid_number': 'Không hợp lệ. Nhập 1-{n}.',
         'prompt_press_enter': 'Nhấn Enter để tiếp tục...',
         'prompt_run_again': '\nTính lại?',
         'input_invalid_num': 'Định dạng số không hợp lệ. Dùng số hoặc "500m".',
+        'prompt_export_pdf': 'Xuất ra PDF?',
+        'prompt_loan_calc': 'Muốn tính kế hoạch vay?',
+        'prompt_down_payment': 'Tỷ lệ trả trước %',
+        'prompt_interest_rate': 'Lãi suất % (năm)',
+        'prompt_loan_term': 'Kỳ hạn vay (năm)',
+        'section_loan': '4. KẾ HOẠCH VAY / TÀI CHÍNH',
+        'label_loan_monthly': 'Trả góp hàng tháng',
+        'label_loan_total_interest': 'Tổng lãi đã trả',
+        'label_loan_total_repayment': 'Tổng trả nợ',
+        'label_loan_effective_cost': 'Chi phí thực tế (có vay)',
+        'label_parking_toll': 'Đỗ xe & BOT (ước tính)',
+        'label_parking_monthly': 'Đỗ xe/tháng',
+        'label_toll_monthly': 'BOT/tháng',
+        'menu_compare': '2. So sánh 2-3 xe',
 
         # Car list header
         'list_header': '{0:<18} {1:<12} {2:<20} {3:>18} {4:>12}',
@@ -210,13 +252,13 @@ TRANSLATIONS = {
         # Comparison
         'comparison_title': 'SO SÁNH: {c1} vs {c2}',
         'comparison_header': '{0:<25} {1:>22} {2:>22}',
-        'comparison_verdict': 'KẾT LUẬN: {winner} tiết kiệm hơn {diff}',
+        'compare_verdict': 'KẾT LUẬN: {winner} tiết kiệm hơn {diff}',
         # comparison hydro keys removed
 
         # Liquidity / Tiers
-        'tier_1': 'Hạng 1 (Thanh khoản cao)',
-        'tier_2': 'Hạng 2',
-        'tier_3': 'Hạng 3 (Thị trường ngách)',
+        'tier_1': 'Tier 1 (High Liquidity)',
+        'tier_2': 'Tier 2',
+        'tier_3': 'Tier 3 (Niche Market)',
 
         # hydro risk labels removed
 
@@ -224,5 +266,9 @@ TRANSLATIONS = {
         'resale_logic_custom': 'Tùy chỉnh',
         'resale_logic_parametric': 'Tham số',
         'resale_logic_ml': 'Mô hình ML',
+
+        # Skip / duplicate prompts
+        'prompt_skip': 'Nhấn Enter để bỏ qua',
+        'prompt_duplicate_car': '  Xe này đã được chọn. Chọn xe khác.',
     },
 }

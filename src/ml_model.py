@@ -6,8 +6,13 @@ import json
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Protocol
 import joblib
+
+
+class _HasPredict(Protocol):
+    """Protocol for sklearn-like estimators with a predict method."""
+    def predict(self, X: pd.DataFrame) -> np.ndarray: ...
 
 HERE = Path(__file__).parent.parent
 MODELS_DIR = HERE / "data" / "models"
@@ -21,8 +26,8 @@ class ResalePredictor:
 
     def __init__(self) -> None:
         self._stats: Optional[pd.DataFrame] = None
-        self._rf: Optional[object] = None
-        self._gb: Optional[object] = None
+        self._rf: Optional[_HasPredict] = None
+        self._gb: Optional[_HasPredict] = None
         self._feature_cols: Optional[list[str]] = None
         self._load()
 
