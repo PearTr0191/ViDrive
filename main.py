@@ -1,6 +1,6 @@
 import sys, argparse
 
-APP_VERSION = "0.5.0"
+APP_VERSION = "0.5.1"
 
 if sys.stdout.encoding != 'utf-8' and hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
