@@ -84,15 +84,13 @@ From v0.5.0 to v1.0.0, ViDrive evolved from an ML-augmented TCO calculator into 
 #### `src/cli.py`
 
 - __Interactive menu system__: 9-option menu (1-car, compare, wizard, list, search, history, cities, demo, exit)
-- __Persistent menu loop__: re-displays menu after each action
+- __Persistent menu loop__: Clears and re-displays menu after each action
 - __Car selection__: numbered list with skip/duplicate detection
 - __Multi-car selector__: `select_cars_n()` for N cars with optional skip on last
 - __Car search__: `search_cars()` by brand/model/type/segment, `print_search_results()` with rich table
 - __History viewer__: `print_history()` with navigation, delete, and re-calc flow
 - __City list__: `print_city_list()` with area tier labels
-- __Data recency check__: warns if market data is older than 60 days
 - __pdflatex check__: warns if LaTeX is not installed
-- __Quick-start guide__: onboarding text for new users
 - __Loan schedule display__: monthly payment, total interest, total repayment, effective cost
 - __Parking & toll estimates__: shown as provision below operating costs
 - __Resale logic label__: displays ML / Parametric / Custom method used
@@ -104,7 +102,7 @@ From v0.5.0 to v1.0.0, ViDrive evolved from an ML-augmented TCO calculator into 
 
 #### `main.py`
 
-- __Entry point__: `main()` with `argparse` for both interactive and CLI modes
+- __Entry point__: `main()` with `argparse` for both interactive and CLI modes. And *especially* gave love to that CLI mode.
 - __Interactive mode__: language selection → menu loop → all features
 - __CLI arguments__: `--car`, `--compare`, `--city`, `--km`, `--years`, `--area`, `--city-ratio`, `--opp-cost`, `--verbose`, `--lang`, `--list-cities`, `--list-cars`, `--search`, `--demo`, `--save`, `--history`, `--csv`, `--csv-compare`
 - __Single-car analysis__: `run_single()` with optional loan, PDF, CSV, save
