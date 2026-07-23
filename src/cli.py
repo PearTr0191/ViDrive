@@ -1,20 +1,46 @@
-from src.config import BRAND_LIQUIDITY_MAP, LAST_UPDATED, DATA_RECENCY_DAYS, WIZARD_SEGMENTS
+"""ViDrive CLI display and interaction functions."""
+from src.config import (
+    BRAND_LIQUIDITY_MAP, LAST_UPDATED, DATA_RECENCY_DAYS, WIZARD_SEGMENTS,
+    CITY_LIST, MAX_COMPARISON_CARS, APP_VERSION,
+)
 from datetime import date
+from typing import overload, Literal
 from src.i18n import t
 from src import i18n as _i18n
+import shutil
+import os
+
+
+def clear_screen():
+    """Cross-platform terminal clear."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+class ViDriveError(Exception):
+    """User-facing error with a friendly message."""
+    pass
+
 
 def fmt_vnd(amount):
     return f"{amount:,.0f} VND"
 
+
 def parse_val(text):
-    if not text: return None
+    if not text:
+        return None
     text = text.lower().strip().replace(",", "")
     mult = {'k': 1_000, 'm': 1_000_000, 'b': 1_000_000_000}
     try:
         return float(text[:-1]) * mult[text[-1]] if text[-1] in mult else float(text)
-    except (ValueError, IndexError, KeyError): return None
+    except (ValueError, IndexError, KeyError):
+        return None
 
-def ask(prompt, default=None, is_num=False):
+
+@overload
+def ask(prompt: str, default: str | float | None = None, is_num: Literal[False] = False) -> str | None: ...  # pyright: ignore[reportOverlappingOverload]
+@overload
+def ask(prompt: str, default: str | float | None = None, is_num: Literal[True] = True) -> float | None: ...
+def ask(prompt: str, default: str | float | None = None, is_num: bool = False) -> str | float | None:
     disp = f"{prompt} [{default}]: " if default else f"{prompt}: "
     while True:
         raw = input(disp).strip()
@@ -25,10 +51,13 @@ def ask(prompt, default=None, is_num=False):
                 continue  # re-prompt if no default and empty input
         else:
             val = raw
-        if not is_num: return val
+        if not is_num:
+            return str(val)
         num = parse_val(str(val))
-        if num is not None: return num
+        if num is not None:
+            return num
         print(t('input_invalid_num'))
+
 
 def ask_bool(prompt, default=False):
     """Language-aware yes/no prompt. Uses y/n for English, c/k for Vietnamese."""
@@ -38,13 +67,17 @@ def ask_bool(prompt, default=False):
     disp = f"{prompt} [{default_char}]: "
     while True:
         val = input(disp).strip().lower() or default_char
-        if val == yes_key: return True
-        if val == no_key:  return False
+        if val == yes_key:
+            return True
+        if val == no_key:
+            return False
         print(f"  Please enter '{yes_key}' or '{no_key}'.")
 
-def select_car(cars, prompt=t('prompt_select_car'), allow_skip=False, selected=None):
+
+def select_car(cars: dict, prompt: str = t('prompt_select_car'), allow_skip: bool = False, selected: list | None = None) -> str | None:
     car_ids = list(cars.keys())
-    if not car_ids: return None
+    if not car_ids:
+        return None
     print(f"\n{prompt}:")
     for i, cid in enumerate(car_ids):
         print(f"  {i+1}. {cars[cid]['brand']} {cars[cid].get('model', cid)}")
@@ -57,7 +90,7 @@ def select_car(cars, prompt=t('prompt_select_car'), allow_skip=False, selected=N
             if allow_skip:
                 return None
             continue
-        if str(choice).isdigit() and 1 <= int(choice) <= n:
+        if choice is not None and str(choice).isdigit() and 1 <= int(choice) <= n:
             chosen = car_ids[int(choice)-1]
             if selected and chosen in selected:
                 print(t('prompt_duplicate_car'))
@@ -65,27 +98,26 @@ def select_car(cars, prompt=t('prompt_select_car'), allow_skip=False, selected=N
             return chosen
         print(t('prompt_invalid_number', n=n))
 
-def get_wizard_car():
-    print(f"\n{t('wizard_title')}")
-    data = {"brand": ask(t('wizard_brand')), "model": ask(t('wizard_model'), t('wizard_default_model'))}
-    data["price"] = ask(t('wizard_price'), is_num=True)
-    data["type"] = str(ask(t('wizard_type'), t('wizard_default_type'))).upper()
-    data["consumption"] = ask(t('wizard_consumption'), t('wizard_default_consumption'), is_num=True)
-    data["annual_maintenance"] = ask(t('wizard_annual_maint'), t('wizard_default_annual_maint'), is_num=True)
-    data["seats"] = int(ask(t('wizard_seats'), "5", is_num=True))
-    print(f"\n{t('wizard_segments_title')}")
-    for i, seg in enumerate(WIZARD_SEGMENTS):
-        print(f"    {i+1}. {seg}")
-    n_seg = len(WIZARD_SEGMENTS)
-    while True:
-        seg_choice = ask(t('wizard_segment_prompt', n=n_seg), "1")
-        if str(seg_choice).isdigit() and 1 <= int(seg_choice) <= n_seg:
-            data["segment"] = WIZARD_SEGMENTS[int(seg_choice) - 1]
-            break
-        print(t('wizard_invalid_range', n=n_seg))
-    depr = ask(t('wizard_depr'), "")
-    data["depreciation_rate"] = float(depr) / 100 if depr else None
-    return data
+
+def select_cars_n(cars, count, selected=None):
+    """Select multiple cars for comparison, allowing skip for the last one."""
+    if selected is None:
+        selected = []
+    chosen = []
+    for i in range(count):
+        is_last = (i == count - 1)
+        prompt = t('prompt_car_n', n=i+1) if i >= 2 else (
+            t('prompt_car_1') if i == 0 else t('prompt_car_2')
+        )
+        if is_last:
+            prompt = t('prompt_car_skip', n=i+1)
+        car = select_car(cars, prompt, allow_skip=is_last, selected=selected + chosen)
+        if car is None and is_last:
+            break  # User skipped the last car
+        if car:
+            chosen.append(car)
+    return chosen
+
 
 def check_data_recency():
     delta = (date.today() - LAST_UPDATED).days
@@ -93,8 +125,31 @@ def check_data_recency():
         print(t('data_recency_warn', date=str(LAST_UPDATED)))
         print(t('data_recency_action'))
 
+
+def check_pdflatex():
+    """Check for pdflatex and warn if not found."""
+    if not shutil.which("pdflatex"):
+        print(t('pdflatex_warn'))
+        print(t('pdflatex_install'))
+
+
 def print_header():
     print(f"\n{t('app_title')}\n")
+
+
+def print_quick_start():
+    """Print a quick-start guide for new users."""
+    print(f"\n{t('quick_start_title')}")
+    print(t('quick_start_1'))
+    print(t('quick_start_2'))
+    print(t('quick_start_3'))
+    print(t('quick_start_4'))
+    print(t('quick_start_5'))
+    print(t('quick_start_6'))
+    print(f"\n{t('quick_start_example')}")
+    print(t('quick_start_args'))
+    print()
+
 
 def row(label: str, v1: int | float | str, v2: int | float | str | None = None, w: int = 22) -> None:
     f1 = fmt_vnd(v1) if isinstance(v1, (int, float)) else str(v1)
@@ -108,14 +163,15 @@ def row(label: str, v1: int | float | str, v2: int | float | str | None = None, 
 def row_n(label: str, *values: int | float | str, widths: list[int] | None = None) -> None:
     """Print a row with N value columns. widths is a list of column widths."""
     if widths is None:
-        # Default: 22 for 2 cars, 18 for 3 cars
         n = len(values)
-        widths = [22 if n <= 2 else 18] * n
+        col_width = 22 if n <= 2 else max(14, 22 - (n - 2) * 2)
+        widths = [col_width] * n
     formatted = []
     for v, w in zip(values, widths):
         f = fmt_vnd(v) if isinstance(v, (int, float)) else str(v)
         formatted.append(f"{f:>{w}}")
     print(f"{label:<25} " + " ".join(formatted))
+
 
 def print_car_list(cars):
     print(f"{t('list_col_id'):<18} {t('list_col_brand'):<12} {t('list_col_model'):<20} {t('list_col_price'):>18} {t('list_col_liquidity'):>12}")
@@ -129,6 +185,49 @@ def print_car_list(cars):
         else:
             liq = t('tier_3')
         print(f"{cid:<18} {c['brand']:<12} {c.get('model', cid):<20} {fmt_vnd(c['price']):>18} {liq:>12}")
+
+
+def search_cars(cars, term: str):
+    """Search cars by brand, model, type, or segment. Returns filtered dict."""
+    term_lower = term.lower().strip()
+    if not term_lower:
+        return cars
+    results = {}
+    for cid, c in cars.items():
+        searchable = " ".join([
+            c.get('brand', ''),
+            c.get('model', ''),
+            c.get('type', ''),
+            c.get('segment', ''),
+            cid,
+        ]).lower()
+        if term_lower in searchable:
+            results[cid] = c
+    return results
+
+
+def print_search_results(cars):
+    """Print search results in a rich table format."""
+    print(f"\n{t('search_results', n=len(cars))}")
+    print(f"{'ID':<18} {'Brand':<12} {'Model':<20} {'Type':<8} {'Segment':<12} {'Price':>15}")
+    print("-" * 85)
+    for cid, c in cars.items():
+        print(f"{cid:<18} {c['brand']:<12} {c.get('model', cid):<20} {c.get('type',''):<8} {c.get('segment',''):<12} {fmt_vnd(c['price']):>15}")
+
+
+def print_city_list():
+    """Print all supported cities with their area tiers."""
+    print(f"\n{t('city_list_title')}")
+    print(f"{t('city_col_name'):<25} {t('city_col_area'):<10} {t('city_col_type'):<15}")
+    print("-" * 55)
+    for display, norm_key, area, diacritic_key in CITY_LIST:
+        area_label = {1: t('city_area1'), 2: t('city_area2'), 3: t('city_area3')}[area]
+        print(f"{display:<25} {area_label:<10} {diacritic_key:<15}")
+    print()
+    print(t('city_area1_note'))
+    print(t('city_area2_note'))
+    print(t('city_area3_note'))
+
 
 def print_result(car_id, year, res, show_opp=False):
     print(f"{t('vehicle', id=car_id.upper())}\n" + "=" * 45 + f"\n{t('summary')}")
@@ -166,6 +265,70 @@ def print_result(car_id, year, res, show_opp=False):
         liq_disp = t('tier_3')
     print(f" {t('label_liquidity', liq=liq_disp)}\n\n" + "=" * 45 + "\n")
 
+
+def print_breakdown(car, city, km, years, area, ratio, res, show_opp=False):
+    """Print detailed calculation breakdown with formulas for transparency."""
+    from src.calculations import get_fuel_breakdown, get_registration_breakdown, calculate_opportunity_cost
+
+    print(f"\n{t('section_breakdown')}\n" + "=" * 60)
+
+    # Fuel breakdown
+    print(t('breakdown_fuel'))
+    fb = get_fuel_breakdown(car, km, years, ratio)
+    print(t('breakdown_fuel_consumption', consumption=fb['consumption']))
+    print(t('breakdown_fuel_freeway', freeway=fb['freeway_mult'], city=fb['city_mult']))
+    print(t('breakdown_fuel_adjusted', ratio=ratio*100, adj=fb['adjusted_consumption']))
+    print(t('breakdown_fuel_price', label=fb['price_label']))
+    print(t('breakdown_fuel_detail',
+            km=km, adj_consumption=fb['adjusted_consumption'], price=fb['price'],
+            years=years, total=fb['total_fuel']))
+    print()
+
+    # Registration breakdown
+    print(t('breakdown_reg'))
+    rb = get_registration_breakdown(car, area)
+    print(t('breakdown_reg_detail', desc=rb['tax_desc']))
+    print(t('breakdown_reg_plate', area=area, plate=rb['plate']))
+    print(t('breakdown_reg_inspection', inspection=rb['inspection']))
+    print(t('breakdown_reg_total', total=rb['total']))
+    print()
+
+    # Maintenance breakdown
+    print(t('breakdown_maint'))
+    maint = res['maint']
+    base_annual = car.get('annual_maintenance', 8_000_000)
+    milestones = (km * years) // 40_000
+    major_cost = 5_000_000 if car['type'] == 'ICE' else (6_500_000 if car['type'] == 'ICE-D' else 1_500_000)
+    print(t('breakdown_maint_detail',
+            base=base_annual, years=years, milestones=milestones,
+            major_cost=major_cost, total=maint))
+    print()
+
+    # Opportunity cost breakdown
+    if show_opp:
+        print(t('breakdown_opp'))
+        print(t('breakdown_opp_detail',
+                principal=res['on_road'], rate=0.065, years=years,
+                total=res['opp_cost']))
+        print()
+
+    # Resale breakdown
+    print(t('breakdown_resale'))
+    print(t('breakdown_resale_detail', resale=res['resale'], method=t('resale_logic_' + res['resale_logic'])))
+    print()
+
+    # TCO formula
+    print(t('breakdown_tco'))
+    print(t('breakdown_tco_detail',
+            on_road=res['on_road'], operating=res['operating'],
+            resale=res['resale'], tco=res['tco']))
+    print()
+
+    # Data recency
+    print(t('breakdown_data_recency', date=str(LAST_UPDATED)))
+    print("=" * 60 + "\n")
+
+
 def print_comparison(c1_id, r1, c2_id, r2, year=5, show_opp=False):
     print(f"\n{t('comparison_title', c1=c1_id.upper(), c2=c2_id.upper())}\n" + "=" * 75)
     print("-" * 75 + f"\n{t('summary')}")
@@ -201,23 +364,26 @@ def print_comparison(c1_id, r1, c2_id, r2, year=5, show_opp=False):
 
 
 def print_comparison_n(cars_data, results, year=5, show_opp=False):
-    """Generic N-car comparison (2 or 3 cars)."""
+    """Generic N-car comparison (2 to MAX_COMPARISON_CARS)."""
     n = len(cars_data)
+    if n < 2:
+        raise ViDriveError(t('error_too_few_cars'))
+    if n > MAX_COMPARISON_CARS:
+        raise ViDriveError(t('error_too_many_cars', max=MAX_COMPARISON_CARS, count=n))
+
     car_ids = [c.upper() for c in cars_data]
 
     # Build comparison title
     if n == 2:
         title = t('comparison_title', c1=car_ids[0], c2=car_ids[1])
-    elif n == 3:
-        title = f"{t('comparison_title', c1=car_ids[0], c2=car_ids[1])} vs {car_ids[2]}"
     else:
         title = "COMPARISON: " + " vs ".join(car_ids)
 
     print(f"\n{title}\n" + "=" * 75)
     print("-" * 75 + f"\n{t('summary')}")
 
-    # Column widths: 22 for 2 cars, 18 for 3 cars
-    col_width = 22 if n <= 2 else 18
+    # Column widths: dynamic based on number of cars
+    col_width = max(12, 22 - (n - 2) * 3)
     widths = [col_width] * n
 
     def _liq_disp(raw):
@@ -266,15 +432,21 @@ def print_comparison_n(cars_data, results, year=5, show_opp=False):
     # Verdict - rank cars by TCO (cheapest = most efficient)
     print("-" * 75 + "\n")
     ranked = sorted(range(n), key=lambda i: results[i]['tco'])
-    if n == 2:
-        best, worst = ranked[0], ranked[1]
-        diff = results[worst]['tco'] - results[best]['tco']
-        print(f"{car_ids[best]} is MORE ECONOMICAL than {car_ids[worst]} by {fmt_vnd(diff)}")
-    elif n == 3:
-        best, second, worst = ranked[0], ranked[1], ranked[2]
-        diff_best = results[worst]['tco'] - results[best]['tco']
-        diff_second = results[worst]['tco'] - results[second]['tco']
-        print(f"{car_ids[best]} is the MOST ECONOMICAL")
-        print(f"{car_ids[best]} is MORE ECONOMICAL than {car_ids[worst]} (least) by {fmt_vnd(diff_best)}")
-        print(f"{car_ids[second]} is MORE ECONOMICAL than {car_ids[worst]} (least) by {fmt_vnd(diff_second)}")
+    best = ranked[0]
+    print(f"{car_ids[best]} is the MOST ECONOMICAL")
+    for i in ranked[1:]:
+        diff = results[i]['tco'] - results[best]['tco']
+        print(f"{car_ids[best]} is MORE ECONOMICAL than {car_ids[i]} by {fmt_vnd(diff)}")
     print("=" * 75 + "\n")
+
+
+def print_history(history):
+    """Print saved results history."""
+    print(f"\n{t('history_title')}")
+    if not history:
+        print(t('history_empty'))
+        return
+    print("-" * 60)
+    for i, entry in enumerate(history):
+        print(t('history_entry', i=i+1, name=entry.get('name', '?'), timestamp=entry.get('timestamp', '?')))
+    print("-" * 60)

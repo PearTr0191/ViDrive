@@ -30,6 +30,45 @@ AREA2_PROVINCES = {
     "thanh hoa", "tay ninh", "tuyen quang", "vinh long",
 }
 
+# Structured city list for --list-cities display
+# Each entry: (display_name, normalized_key, area_tier, diacritic_key)
+CITY_LIST = [
+    ("Hanoi", "hanoi", 1, "hà nội"),
+    ("Ho Chi Minh City", "ho chi minh", 1, "thành phố hồ chí minh"),
+    ("Da Nang", "da nang", 1, "đà nẵng"),
+    ("Hue", "hue", 1, "huế"),
+    ("Can Tho", "can tho", 1, "cần thơ"),
+    ("Hai Phong", "hai phong", 1, "hải phòng"),
+    ("An Giang", "an giang", 2, "an giang"),
+    ("Bac Ninh", "bac ninh", 2, "bắc ninh"),
+    ("Ca Mau", "ca mau", 2, "cà mau"),
+    ("Cao Bang", "cao bang", 2, "cao bằng"),
+    ("Dak Lak", "dak lak", 2, "đắk lắk"),
+    ("Dien Bien", "dien bien", 2, "điện biên"),
+    ("Dong Nai", "dong nai", 2, "đồng nai"),
+    ("Dong Thap", "dong thap", 2, "đồng tháp"),
+    ("Gia Lai", "gia lai", 2, "gia lai"),
+    ("Ha Tinh", "ha tinh", 2, "hà tĩnh"),
+    ("Hung Yen", "hung yen", 2, "hưng yên"),
+    ("Khanh Hoa", "khanh hoa", 2, "khánh hòa"),
+    ("Lai Chau", "lai chau", 2, "lai châu"),
+    ("Lam Dong", "lam dong", 2, "lâm đồng"),
+    ("Lang Son", "lang son", 2, "lạng sơn"),
+    ("Lao Cai", "lao cai", 2, "lào cai"),
+    ("Nghe An", "nghe an", 2, "nghệ an"),
+    ("Ninh Binh", "ninh binh", 2, "ninh bình"),
+    ("Phu Tho", "phu tho", 2, "phú thọ"),
+    ("Quang Ngai", "quang ngai", 2, "quảng ngãi"),
+    ("Quang Ninh", "quang ninh", 2, "quảng ninh"),
+    ("Quang Tri", "quang tri", 2, "quảng trị"),
+    ("Son La", "son la", 2, "sơn la"),
+    ("Thai Nguyen", "thai nguyen", 2, "thái nguyên"),
+    ("Thanh Hoa", "thanh hoa", 2, "thanh hóa"),
+    ("Tay Ninh", "tay ninh", 2, "tây ninh"),
+    ("Tuyen Quang", "tuyen quang", 2, "tuyên quang"),
+    ("Vinh Long", "vinh long", 2, "vĩnh long"),
+]
+
 # --- On-Road Fees ---
 # Thong tu 155/2025/TT-BTC, effective Jan 1 2026
 # Area 1: Hanoi, HCMC, Da Nang, Hue, Can Tho, Hai Phong
@@ -109,7 +148,7 @@ SEGMENT_DEPRECIATION_MAP = {
 
 # Supported Wizard Segments
 WIZARD_SEGMENTS = [
-    "B-Sedan", "C-Sedan", "D-Sedan", "B-SUV", "C-SUV", "D-SUV", 
+    "B-Sedan", "C-Sedan", "D-Sedan", "B-SUV", "C-SUV", "D-SUV",
     "MPV", "Pickup", "A-Hatch", "B-Hatch", "A-SUV", "EV-Mini"
 ]
 
@@ -125,7 +164,7 @@ DEPRECIATION_SHOWROOM_EXIT_PENALTY = 0.05
 # --- Parking & Toll Estimates (Monthly, VND) ---
 # Based on city/highway driving split: tolls scale with highway km, parking with city km
 # Area 1: Major city centers (Hanoi/HCMC core) - high parking, high tolls
-# Area 2: City/Town - moderate parking, moderate tolls  
+# Area 2: City/Town - moderate parking, moderate tolls
 # Area 3: Rural/District - low parking, minimal tolls
 PARKING_TOLL_ESTIMATES = {
     "area1": {"parking_monthly": 1_200_000, "toll_monthly": 600_000},
@@ -133,5 +172,20 @@ PARKING_TOLL_ESTIMATES = {
     "area3": {"parking_monthly": 100_000,   "toll_monthly": 50_000},
 }
 
+# --- Flood / Hydro Risk Zones ---
+# Cities with high flood risk (Hanoi, HCMC)
+HYDRO_RISK_CITIES = {"hanoi", "hn", "ho chi minh", "hcmc", "saigon"}
+
 LAST_UPDATED = date(2026, 7, 14)
 DATA_RECENCY_DAYS = 60
+
+# --- Persistence ---
+HISTORY_DIR = "~/.vidrive"
+HISTORY_FILE = "history.json"
+MAX_HISTORY_ENTRIES = 50
+
+# --- Comparison ---
+MAX_COMPARISON_CARS = 10
+
+# --- App Version ---
+APP_VERSION = "1.0.0"
