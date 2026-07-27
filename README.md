@@ -5,7 +5,7 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 ## Current Functionality
 
 > [!NOTE]
-> As of 2:41am, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. The app will work fine as long as new data is pulled in on the user's end, but as a student project, this is it. I will seek field experts' advice and discuss initiatives to potentially bring ViDrive to more people, ideally in a more user-friendly and visually satisfying form factor, even though the code-ish font and sheer simplicity of Interactive Mode has grown on me hard.
+> As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. The app will work fine as long as new data is pulled in on the user's end, but as a student project, this is it. I will seek field experts' advice and discuss initiatives to potentially bring ViDrive to more people, ideally in a more user-friendly and visually satisfying form factor, even though the code-ish font and sheer simplicity of Interactive Mode has grown on me hard.
 
 > [!NOTE]
 > Having to balance the time with school and other projects, I am unsure of my ability to commit the data-entry for all models without generative intelligence or professional data solutions. Therefore, for the foreseeable future, ViDrive will focus on providing precision for **mainstream and popular vehicles** sold in the Vietnamese market. For niche models, use the wizard with discretion.
