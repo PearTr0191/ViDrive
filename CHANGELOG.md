@@ -71,7 +71,6 @@ From v0.5.0 to v1.0.0, ViDrive evolved from an ML-augmented TCO calculator into 
 - `PLATE_FEES`: Hanoi/HCMC 20M → 14M (Thong tu 155/2025/TT-BTC, effective Jan 1 2026)
 - `HISTORY_DIR`, `HISTORY_FILE`, `MAX_HISTORY_ENTRIES`: persistence config
 - `PARKING_TOLL_ESTIMATES`: area1 (1.2M/600K), area2 (400K/200K), area3 (100K/50K)
-- `HYDRO_RISK_CITIES`: expanded set
 - `CITY_LIST`: structured list with display name, normalized key, area tier, diacritic key
 
 #### `src/i18n.py`
@@ -125,7 +124,6 @@ From v0.5.0 to v1.0.0, ViDrive evolved from an ML-augmented TCO calculator into 
 - `calculate_loan_schedule()`: reducing balance loan calculator (standard in Vietnam)
 - `get_tco()`: now includes `parking_toll` in result dict, updated to pass `area` explicitly to sub-calculations
 - `get_fuel_breakdown()` / `get_registration_breakdown()`: verbose breakdown helpers
-- `hydro_risk` info added to TCO result
 
 #### `src/ml_model.py`
 

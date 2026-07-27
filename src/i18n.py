@@ -124,8 +124,6 @@ TRANSLATIONS = {
         'section_initial': '1. INITIAL OUTLAY',
         'section_operating': '2. OPERATING COSTS',
         'section_resale': '3. RESALE & DEPRECIATION',
-        'section_environment': '4. ENVIRONMENTAL RISKS (Provisions)',
-        'env_not_included': ' (Not included in TCO totals)',
         'section_breakdown': 'BREAKDOWN / FORMULAS',
 
         # Result labels
@@ -143,8 +141,6 @@ TRANSLATIONS = {
         'label_resale': 'Predicted Resale',
         'label_depreciation': 'Total Depreciation',
         'label_liquidity': 'Liquidity: {liq}',
-        'label_hydro_risk': 'Hydro-Risk Level: {level}',
-        'label_hydro_estimate': ' Est. Repair Cost',
         'label_net_tco': 'Net TCO ({y} Years)',
         'label_brand_liquidity': 'Brand Liquidity',
 
@@ -152,9 +148,6 @@ TRANSLATIONS = {
         'comparison_title': 'COMPARISON: {c1} vs {c2}',
         'compare_header': '{0:<25} {1:>22} {2:>22}',
         'compare_verdict': 'VERDICT: {winner} is MORE ECONOMICAL by {diff}',
-        'compare_hydro_risk': 'Hydro Risk (Flood)',
-        'compare_repair_prov': 'Repair Provision',
-
         # Deprecation logic label
         'resale_logic_custom': 'Custom',
         'resale_logic_parametric': 'Parametric',
@@ -303,7 +296,7 @@ TRANSLATIONS = {
         'prompt_area_result': '  → {city} → Khu vực {area}',
         'prompt_annual_km': 'Số km/năm',
         'prompt_years': 'Số năm sở hữu',
-        'prompt_city_ratio': '  Tỷ lệ km chạy trong đô thại (%) (0-100)',
+        'prompt_city_ratio': '  Tỷ lệ km chạy trong đô thị (%) (0-100)',
         'prompt_opp_cost': '  Có tính lãi cơ hội bị bỏ lỡ?',
         'prompt_verbose': '  Hiển thị chi tiết công thức?',
         'prompt_compare_count': 'Bao nhiêu xe để so sánh? (2-{max})',
@@ -361,8 +354,6 @@ TRANSLATIONS = {
         'section_initial': '1. CHI PHÍ BAN ĐẦU',
         'section_operating': '2. CHI PHÍ VẬN HÀNH',
         'section_resale': '3. GIÁ BÁN LẠI & KHẤU HAO',
-        'section_environment': '4. RỦI RO MÔI TRƯỜNG (Dự phòng)',
-        'env_not_included': ' (Không tính vào tổng TCO)',
         'section_breakdown': 'CHI TIẾT CÔNG THỨC',
 
         # Result labels
@@ -388,9 +379,6 @@ TRANSLATIONS = {
         'comparison_title': 'SO SÁNH: {c1} vs {c2}',
         'compare_header': '{0:<25} {1:>22} {2:>22}',
         'compare_verdict': 'KẾT LUẬN: {winner} tiết kiệm hơn {diff}',
-        'compare_hydro_risk': 'Rủi ro lũ lụt',
-        'compare_repair_prov': 'Dự phòng sửa chữa',
-
         # Resale logic label
         'resale_logic_custom': 'Tùy chỉnh',
         'resale_logic_parametric': 'Tham số',

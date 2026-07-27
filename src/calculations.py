@@ -132,17 +132,6 @@ def calculate_opportunity_cost(principal, years, rate=SAVINGS_INTEREST_RATE):
         return float('inf')
 
 
-def get_hydro_risk_info(city):
-    """Returns flood risk metadata based on city location."""
-    key = _strip_diacritics(city.lower().strip())
-    is_high_risk = key in HYDRO_RISK_CITIES
-    return {
-        "is_high_risk": is_high_risk,
-        "risk_level": "High (Flood Prone)" if is_high_risk else "Moderate",
-        "estimate": HYDRO_RISK_ESTIMATE if is_high_risk else HYDRO_RISK_ESTIMATE * 0.2,
-    }
-
-
 def calculate_maintenance(km, car_type, base_cost=8_000_000, years=1):
     annual = base_cost * (EV_MAINTENANCE_DISCOUNT if car_type == "EV" else 1.0)
     total = annual * years
@@ -240,7 +229,6 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
     # [v0.5.0] Market Research Factors
     opp_cost = calculate_opportunity_cost(on_road, years)
     liquidity = BRAND_LIQUIDITY_MAP.get(car.get("brand"), "Tier 3 (Niche)")
-    hydro = get_hydro_risk_info(city)
 
     tco = (on_road + operating) - resale
 
@@ -259,7 +247,6 @@ def get_tco(car, city, km, years=5, purchase_date=None, area=None, city_ratio=0.
         "depreciation": depreciation,
         "opp_cost": opp_cost,
         "liquidity": liquidity,
-        "hydro_risk": hydro,
         "tco": tco,
         "true_financial_impact": tco + opp_cost,
         "monthly": operating / (years * 12),

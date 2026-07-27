@@ -94,8 +94,6 @@ TRAFFIC_EFFICIENCY_MAP = {
     "HEV": (1.05, 0.95),
     "EV":  (1.12, 0.90)
 }
-HYDRO_RISK_ESTIMATE = 120_000_000
-
 BRAND_LIQUIDITY_MAP = {
     "Toyota": "Tier 1", "Honda": "Tier 1", "Mitsubishi": "Tier 1",
     "Hyundai": "Tier 2", "Kia": "Tier 2", "Mazda": "Tier 2",
@@ -171,10 +169,6 @@ PARKING_TOLL_ESTIMATES = {
     "area2": {"parking_monthly": 400_000,   "toll_monthly": 200_000},
     "area3": {"parking_monthly": 100_000,   "toll_monthly": 50_000},
 }
-
-# --- Flood / Hydro Risk Zones ---
-# Cities with high flood risk (Hanoi, HCMC)
-HYDRO_RISK_CITIES = {"hanoi", "hn", "ho chi minh", "hcmc", "saigon"}
 
 LAST_UPDATED = date(2026, 7, 14)
 DATA_RECENCY_DAYS = 60
