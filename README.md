@@ -7,7 +7,7 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 > [!NOTE]
 > The Web version of ViDrive is now live! Visit here: https://vidrive-web.pages.dev/
 > 
-> Even more cars, a delightful UX and significant calculation stability upgrades. GitHub repo: https://github.com/PearTr0191/ViDrive-Web
+> Even more cars, a delightful UX and significant calculation stability upgrades.
 
 > [!NOTE]
 > As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. The app will work fine as long as new data is pulled in on the user's end, but as a student project, this is it. I will seek field experts' advice and discuss initiatives to potentially bring ViDrive to more people, ideally in a more user-friendly and visually satisfying form factor, even though the code-ish font and sheer simplicity of Interactive Mode has grown on me hard.
