@@ -15,7 +15,7 @@
     "price": 595000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 6.489,
+    "consumption": 5.5,
     "annual_maintenance": 5000000,
     "segment": "B-Sedan"
   },
@@ -25,7 +25,7 @@
     "price": 598000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.034,
+    "consumption": 6.15,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -35,7 +35,7 @@
     "price": 1150000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 6.077000000000001,
+    "consumption": 6.08,
     "annual_maintenance": 11000000,
     "segment": "D-Sedan"
   },
@@ -45,7 +45,7 @@
     "price": 1200000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.755,
+    "consumption": 8.25,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -55,7 +55,7 @@
     "price": 569000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 6.5920000000000005,
+    "consumption": 7.3,
     "annual_maintenance": 5000000,
     "segment": "B-Sedan"
   },
@@ -65,7 +65,7 @@
     "price": 889000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.622000000000001,
+    "consumption": 7.5,
     "annual_maintenance": 9000000,
     "segment": "C-Sedan"
   },
@@ -75,7 +75,7 @@
     "price": 820000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.827999999999999,
+    "consumption": 7.8,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -85,7 +85,7 @@
     "price": 705000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.7250000000000005,
+    "consumption": 8.5,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -95,7 +95,7 @@
     "price": 1099000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.961,
+    "consumption": 7.15,
     "annual_maintenance": 11000000,
     "segment": "C-SUV"
   },
@@ -105,7 +105,7 @@
     "price": 765000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.416,
+    "consumption": 7.5,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -115,7 +115,7 @@
     "price": 829000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 9.167,
+    "consumption": 8.5,
     "annual_maintenance": 10000000,
     "segment": "C-SUV"
   },
@@ -125,7 +125,7 @@
     "price": 1100000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 11.433,
+    "consumption": 9.75,
     "annual_maintenance": 11000000,
     "segment": "D-SUV"
   },
@@ -135,7 +135,7 @@
     "price": 669000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.827999999999999,
+    "consumption": 6.75,
     "annual_maintenance": 8500000,
     "segment": "C-Sedan"
   },
@@ -145,7 +145,7 @@
     "price": 569000000,
     "type": "HEV",
     "seats": 7,
-    "consumption": 6.5920000000000005,
+    "consumption": 5.95,
     "annual_maintenance": 7500000,
     "segment": "MPV"
   },
@@ -155,7 +155,7 @@
     "price": 1468000000,
     "type": "ICE-D",
     "seats": 7,
-    "consumption": 8.961,
+    "consumption": 8.6,
     "annual_maintenance": 13000000,
     "segment": "D-SUV"
   },
@@ -165,7 +165,7 @@
     "price": 900000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 8.858,
+    "consumption": 8.5,
     "annual_maintenance": 10000000,
     "segment": "C-SUV"
   },
@@ -175,7 +175,7 @@
     "price": 1055000000,
     "type": "ICE-D",
     "seats": 7,
-    "consumption": 9.167,
+    "consumption": 9.17,
     "annual_maintenance": 11500000,
     "segment": "D-SUV"
   },
@@ -185,7 +185,7 @@
     "price": 920000000,
     "type": "ICE-D",
     "seats": 5,
-    "consumption": 9.785,
+    "consumption": 8.0,
     "annual_maintenance": 12500000,
     "segment": "Pickup"
   },
@@ -195,7 +195,7 @@
     "price": 370000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 5.665,
+    "consumption": 5.95,
     "annual_maintenance": 4000000,
     "segment": "A-Hatch"
   },
@@ -205,7 +205,7 @@
     "price": 825000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.24,
+    "consumption": 7.2,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -215,7 +215,7 @@
     "price": 459000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 6.18,
+    "consumption": 4.75,
     "annual_maintenance": 5000000,
     "segment": "B-Hatch"
   },
@@ -225,7 +225,7 @@
     "price": 639000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.622000000000001,
+    "consumption": 7.6,
     "annual_maintenance": 8000000,
     "segment": "C-Sedan"
   },
@@ -235,7 +235,7 @@
     "price": 635000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.7250000000000005,
+    "consumption": 7.73,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -245,8 +245,8 @@
     "price": 750000000,
     "type": "EV",
     "seats": 7,
-    "consumption": 18.54,
-    "annual_maintenance": 5000000,
+    "consumption": 20.75,
+    "annual_maintenance": 3000000,
     "segment": "MPV"
   },
   "mazda2_2026": {
@@ -255,7 +255,7 @@
     "price": 509000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 6.489,
+    "consumption": 6.49,
     "annual_maintenance": 5000000,
     "segment": "B-Sedan"
   },
@@ -265,7 +265,7 @@
     "price": 719000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.827999999999999,
+    "consumption": 7.7,
     "annual_maintenance": 8500000,
     "segment": "C-Sedan"
   },
@@ -275,7 +275,7 @@
     "price": 330000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 5.562,
+    "consumption": 6.7,
     "annual_maintenance": 4000000,
     "segment": "A-Hatch"
   },
@@ -285,7 +285,7 @@
     "price": 850000000,
     "type": "ICE-D",
     "seats": 5,
-    "consumption": 9.579,
+    "consumption": 9.58,
     "annual_maintenance": 12500000,
     "segment": "Pickup"
   },
@@ -295,7 +295,7 @@
     "price": 870000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 9.064000000000002,
+    "consumption": 9.15,
     "annual_maintenance": 9500000,
     "segment": "C-SUV"
   },
@@ -305,7 +305,7 @@
     "price": 1120000000,
     "type": "ICE-D",
     "seats": 7,
-    "consumption": 9.475999999999999,
+    "consumption": 9.75,
     "annual_maintenance": 11500000,
     "segment": "D-SUV"
   },
@@ -315,7 +315,7 @@
     "price": 979000000,
     "type": "ICE-D",
     "seats": 5,
-    "consumption": 9.785,
+    "consumption": 10.0,
     "annual_maintenance": 12500000,
     "segment": "Pickup"
   },
@@ -325,7 +325,7 @@
     "price": 1315000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 11.33,
+    "consumption": 7.82,
     "annual_maintenance": 12000000,
     "segment": "D-SUV"
   },
@@ -335,7 +335,7 @@
     "price": 699000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.827999999999999,
+    "consumption": 7.83,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -345,7 +345,7 @@
     "price": 1029000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 9.167,
+    "consumption": 9.3,
     "annual_maintenance": 10500000,
     "segment": "C-SUV"
   },
@@ -355,7 +355,7 @@
     "price": 924000000,
     "type": "ICE-D",
     "seats": 5,
-    "consumption": 9.785,
+    "consumption": 8.4,
     "annual_maintenance": 12500000,
     "segment": "Pickup"
   },
@@ -365,7 +365,7 @@
     "price": 925000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 8.858,
+    "consumption": 8.86,
     "annual_maintenance": 10500000,
     "segment": "C-SUV"
   },
@@ -375,7 +375,7 @@
     "price": 698000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.034,
+    "consumption": 8.03,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -385,8 +385,8 @@
     "price": 302000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 13.493,
-    "annual_maintenance": 4000000,
+    "consumption": 9.0,
+    "annual_maintenance": 1200000,
     "segment": "EV-Mini"
   },
   "vf5_2026": {
@@ -395,8 +395,8 @@
     "price": 529000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 18.436999999999998,
-    "annual_maintenance": 4500000,
+    "consumption": 14.76,
+    "annual_maintenance": 1600000,
     "segment": "B-SUV"
   },
   "vfe34_2026": {
@@ -405,8 +405,8 @@
     "price": 732000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 18.849,
-    "annual_maintenance": 5000000,
+    "consumption": 17.15,
+    "annual_maintenance": 1200000,
     "segment": "B-SUV"
   },
   "vf7_2026": {
@@ -415,8 +415,8 @@
     "price": 949000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 20.909000000000002,
-    "annual_maintenance": 5500000,
+    "consumption": 20.31,
+    "annual_maintenance": 2400000,
     "segment": "C-SUV"
   },
   "vf8_2026": {
@@ -425,8 +425,8 @@
     "price": 1019000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 24.102,
-    "annual_maintenance": 6500000,
+    "consumption": 20.75,
+    "annual_maintenance": 3000000,
     "segment": "D-SUV"
   },
   "vf9_2026": {
@@ -435,8 +435,8 @@
     "price": 1499000000,
     "type": "EV",
     "seats": 7,
-    "consumption": 23.793000000000003,
-    "annual_maintenance": 7000000,
+    "consumption": 24.5,
+    "annual_maintenance": 3600000,
     "segment": "D-SUV"
   },
   "vios_2026": {
@@ -445,7 +445,7 @@
     "price": 545000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 6.901000000000001,
+    "consumption": 7.3,
     "annual_maintenance": 4500000,
     "segment": "B-Sedan"
   },
@@ -455,7 +455,7 @@
     "price": 860000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 8.858,
+    "consumption": 8.86,
     "annual_maintenance": 9500000,
     "segment": "C-SUV"
   },
@@ -465,7 +465,7 @@
     "price": 599000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.137,
+    "consumption": 7.9,
     "annual_maintenance": 7500000,
     "segment": "MPV"
   },
@@ -475,7 +475,7 @@
     "price": 658000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.446,
+    "consumption": 7.0,
     "annual_maintenance": 5000000,
     "segment": "MPV"
   },
@@ -485,7 +485,7 @@
     "price": 720000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 5.768,
+    "consumption": 5.77,
     "annual_maintenance": 8000000,
     "segment": "B-SUV"
   },
@@ -495,7 +495,7 @@
     "price": 710000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.622000000000001,
+    "consumption": 7.62,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -505,7 +505,7 @@
     "price": 929000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 8.858,
+    "consumption": 8.86,
     "annual_maintenance": 11000000,
     "segment": "C-SUV"
   },
@@ -515,7 +515,7 @@
     "price": 750000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.137,
+    "consumption": 7.4,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -525,7 +525,7 @@
     "price": 705000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.034,
+    "consumption": 7.0,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -535,8 +535,8 @@
     "price": 765000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 18.54,
-    "annual_maintenance": 5000000,
+    "consumption": 16.5,
+    "annual_maintenance": 2000000,
     "segment": "B-SUV"
   },
   "atto3_2026": {
@@ -545,8 +545,8 @@
     "price": 886000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 18.128000000000004,
-    "annual_maintenance": 6000000,
+    "consumption": 16.0,
+    "annual_maintenance": 1200000,
     "segment": "B-SUV"
   },
   "seal_2026": {
@@ -555,8 +555,8 @@
     "price": 1359000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 24.308000000000003,
-    "annual_maintenance": 8000000,
+    "consumption": 18.0,
+    "annual_maintenance": 1500000,
     "segment": "D-Sedan"
   },
   "mg5_2026": {
@@ -565,7 +565,7 @@
     "price": 528000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.622000000000001,
+    "consumption": 7.0,
     "annual_maintenance": 8000000,
     "segment": "C-Sedan"
   },
@@ -575,7 +575,7 @@
     "price": 588000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.416,
+    "consumption": 7.0,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -585,7 +585,7 @@
     "price": 749000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 8.961,
+    "consumption": 7.0,
     "annual_maintenance": 9500000,
     "segment": "C-SUV"
   },
@@ -595,7 +595,7 @@
     "price": 599000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.7250000000000005,
+    "consumption": 6.91,
     "annual_maintenance": 7000000,
     "segment": "B-SUV"
   },
@@ -605,7 +605,7 @@
     "price": 879000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 6.2829999999999995,
+    "consumption": 7.5,
     "annual_maintenance": 10000000,
     "segment": "C-SUV"
   },
@@ -615,7 +615,7 @@
     "price": 986000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 6.2829999999999995,
+    "consumption": 6.5,
     "annual_maintenance": 11000000,
     "segment": "C-SUV"
   },
@@ -625,8 +625,8 @@
     "price": 499000000,
     "type": "EV",
     "seats": 5,
-    "consumption": 13.081,
-    "annual_maintenance": 4500000,
+    "consumption": 9.5,
+    "annual_maintenance": 1100000,
     "segment": "EV-Mini"
   },
   "ex5_2026": {
@@ -635,7 +635,7 @@
     "price": 969000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 6.2829999999999995,
+    "consumption": 9.5,
     "annual_maintenance": 11000000,
     "segment": "C-SUV"
   },
@@ -645,7 +645,7 @@
     "price": 870000000,
     "type": "HEV",
     "seats": 5,
-    "consumption": 5.253,
+    "consumption": 5.25,
     "annual_maintenance": 9500000,
     "segment": "C-Sedan"
   },
@@ -655,7 +655,7 @@
     "price": 498000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.004,
+    "consumption": 5.66,
     "annual_maintenance": 4500000,
     "segment": "A-SUV"
   },
@@ -665,7 +665,7 @@
     "price": 609000000,
     "type": "ICE",
     "seats": 5,
-    "consumption": 7.21,
+    "consumption": 7.12,
     "annual_maintenance": 5000000,
     "segment": "A-SUV"
   },
@@ -675,7 +675,7 @@
     "price": 999000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.755,
+    "consumption": 7.05,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -685,7 +685,7 @@
     "price": 599000000,
     "type": "ICE",
     "seats": 7,
-    "consumption": 8.137,
+    "consumption": 7.5,
     "annual_maintenance": 8000000,
     "segment": "MPV"
   },
@@ -695,8 +695,138 @@
     "price": 1299000000,
     "type": "ICE-D",
     "seats": 5,
-    "consumption": 10.815,
+    "consumption": 10.75,
     "annual_maintenance": 15000000,
     "segment": "Pickup"
+  },
+  "glc_2026": {
+    "brand": "Mercedes-Benz",
+    "model": "GLC 200 4MATIC",
+    "price": 2299000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.5,
+    "annual_maintenance": 18000000,
+    "segment": "C-SUV"
+  },
+  "cclass_2026": {
+    "brand": "Mercedes-Benz",
+    "model": "C 200 Avantgarde",
+    "price": 1599000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 7.6,
+    "annual_maintenance": 15000000,
+    "segment": "C-Sedan"
+  },
+  "eclass_2026": {
+    "brand": "Mercedes-Benz",
+    "model": "E 200 Avantgarde",
+    "price": 2449000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.6,
+    "annual_maintenance": 18000000,
+    "segment": "D-Sedan"
+  },
+  "bmw3_2026": {
+    "brand": "BMW",
+    "model": "320i",
+    "price": 1699000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 7.5,
+    "annual_maintenance": 15000000,
+    "segment": "C-Sedan"
+  },
+  "bmw5_2026": {
+    "brand": "BMW",
+    "model": "520i",
+    "price": 1979000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.6,
+    "annual_maintenance": 18000000,
+    "segment": "D-Sedan"
+  },
+  "x3_2026": {
+    "brand": "BMW",
+    "model": "X3 20 xDrive",
+    "price": 2299000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.5,
+    "annual_maintenance": 18000000,
+    "segment": "C-SUV"
+  },
+  "x5_2026": {
+    "brand": "BMW",
+    "model": "X5 xDrive40i",
+    "price": 4160000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 10.5,
+    "annual_maintenance": 21000000,
+    "segment": "D-SUV"
+  },
+  "a4_2026": {
+    "brand": "Audi",
+    "model": "A4",
+    "price": 1690000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 7.6,
+    "annual_maintenance": 15000000,
+    "segment": "C-Sedan"
+  },
+  "a6_2026": {
+    "brand": "Audi",
+    "model": "A6",
+    "price": 2299000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.6,
+    "annual_maintenance": 18000000,
+    "segment": "D-Sedan"
+  },
+  "q3_2026": {
+    "brand": "Audi",
+    "model": "Q3 35 TFSI",
+    "price": 1890000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 8.3,
+    "annual_maintenance": 18000000,
+    "segment": "C-SUV"
+  },
+  "q5_2026": {
+    "brand": "Audi",
+    "model": "Q5 Black Edition",
+    "price": 2390000000,
+    "type": "ICE",
+    "seats": 5,
+    "consumption": 9.0,
+    "annual_maintenance": 18000000,
+    "segment": "C-SUV"
+  },
+  "palisade_2026": {
+    "brand": "Hyundai",
+    "model": "Palisade Prestige",
+    "price": 1429000000,
+    "type": "ICE",
+    "seats": 7,
+    "consumption": 8.5,
+    "annual_maintenance": 15000000,
+    "segment": "D-SUV"
+  },
+  "wuling_mini_2026": {
+    "brand": "Wuling",
+    "model": "Mini EV",
+    "price": 197000000,
+    "type": "EV",
+    "seats": 4,
+    "consumption": 9.0,
+    "annual_maintenance": 1000000,
+    "segment": "EV-Mini"
   }
 }

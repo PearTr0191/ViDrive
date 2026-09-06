@@ -6,8 +6,6 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 
 > [!NOTE]
 > The Web version of ViDrive is now live! Visit here: https://vidrive-web.pages.dev/
-> 
-> Even more cars, a delightful UX and significant calculation stability upgrades.
 
 > [!NOTE]
 > As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. The app will work fine as long as new data is pulled in on the user's end, but as a student project, this is it. I will seek field experts' advice and discuss initiatives to potentially bring ViDrive to more people, ideally in a more user-friendly and visually satisfying form factor, even though the code-ish font and sheer simplicity of Interactive Mode has grown on me hard.
@@ -59,7 +57,7 @@ Select from 9 options:
 | # | Option | Description |
 |---|--------|-------------|
 | 1 | Single car | Analyze one vehicle |
-| 2 | Compare | Side-by-side comparison (2–10 cars) |
+| 2 | Compare | Side-by-side comparison (2–4 cars) |
 | 3 | Wizard | Build a custom car with manual parameters |
 | 4 | List cars | Browse all available vehicles |
 | 5 | Search | Find cars by keyword |
@@ -78,7 +76,7 @@ Besides the signature interactive mode, ViDrive supports a full CLI as-is for sc
 # Single car analysis
 python main.py --car vios_2026 --city hanoi --km 15000 --years 5
 
-# Compare 2–10 cars
+# Compare 2–4 cars
 python main.py --compare vios_2026 city_2026 accent_2026 --city hanoi
 
 # Run randomized demo

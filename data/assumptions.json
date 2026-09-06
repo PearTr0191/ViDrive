@@ -1,0 +1,266 @@
+{
+  "PETROL_PRICE_CURRENT_VND": 22660,
+  "PETROL_PRICE_FORECAST_VND": 22000,
+  "DIESEL_PRICE_CURRENT_VND": 28080,
+  "DIESEL_PRICE_FORECAST_VND": 23500,
+  "EV_CHARGING_PRICE_VND": 3858,
+  "ICE_REGISTRATION_RATE_STANDARD": 0.1,
+  "ICE_REGISTRATION_RATE_CENTRAL_CITY": 0.12,
+  "EV_EXEMPTION_END_DATE": "2027-02-28",
+  "EV_POST_EXEMPTION_DISCOUNT": 0.5,
+  "PLATE_FEES": {
+    "1": 14000000,
+    "2": 140000,
+    "3": 140000
+  },
+  "PLATE_FEE_METRO": 14000000,
+  "PLATE_FEE_NON_METRO_AREA1": 140000,
+  "INSPECTION_FEE": 340000,
+  "ROAD_MAINTENANCE_FEE_YEARLY": 1560000,
+  "CIVIL_INSURANCE_UNDER_6": 437000,
+  "CIVIL_INSURANCE_6_TO_11": 794000,
+  "OPTIONAL_PHYSICAL_DAMAGE_INSURANCE_RATE": 0.015,
+  "BASE_ANNUAL_MAINTENANCE_ICE": 8000000,
+  "BASE_ANNUAL_MAINTENANCE_EV": 1200000,
+  "MAINTENANCE_MAJOR_KM": 40000,
+  "MAINTENANCE_MAJOR_COST_ICE": 5000000,
+  "MAINTENANCE_MAJOR_COST_ICE_D": 6500000,
+  "MAINTENANCE_MAJOR_COST_EV": 1500000,
+  "MAINTENANCE_SPIKES": {
+    "ICE": [
+      [
+        40000,
+        3500000
+      ],
+      [
+        80000,
+        6000000
+      ],
+      [
+        120000,
+        8500000
+      ]
+    ],
+    "ICE-D": [
+      [
+        40000,
+        6000000
+      ],
+      [
+        80000,
+        12000000
+      ],
+      [
+        120000,
+        18000000
+      ]
+    ],
+    "HEV": [
+      [
+        40000,
+        3500000
+      ],
+      [
+        80000,
+        6000000
+      ],
+      [
+        120000,
+        8000000
+      ]
+    ],
+    "EV": [
+      [
+        15000,
+        500000
+      ],
+      [
+        45000,
+        700000
+      ],
+      [
+        90000,
+        1000000
+      ]
+    ]
+  },
+  "SAVINGS_INTEREST_RATE": 0.065,
+  "PARKING_TOLL_ESTIMATES": {
+    "area1_metro": {
+      "parking_monthly": 1700000,
+      "toll_monthly": 1050000
+    },
+    "area1": {
+      "parking_monthly": 1000000,
+      "toll_monthly": 600000
+    },
+    "area2": {
+      "parking_monthly": 800000,
+      "toll_monthly": 200000
+    },
+    "area3": {
+      "parking_monthly": 700000,
+      "toll_monthly": 50000
+    }
+  },
+  "_meta": {
+    "_description": "External-world values consumed by backend/src/config.py. Bots and humans edit THIS file, never the Python source. Each _meta entry records when the value was last verified against its source; LAST_UPDATED is derived as min(verified_at).",
+    "_schema": "value entries keyed by config constant name; _meta[name] = {domain, verified_at, source, note}",
+    "PETROL_PRICE_CURRENT_VND": {
+      "domain": "fuel",
+      "verified_at": "2026-08-22",
+      "source": "https://baomoi.com/tien-ich-gia-xang-dau.epi",
+      "note": "MoT-managed vung-1 retail cycle (baomoi.com aggregate)"
+    },
+    "PETROL_PRICE_FORECAST_VND": {
+      "domain": "fuel",
+      "verified_at": "2026-08-06",
+      "source": "https://www.petrolimex.com.vn/",
+      "note": "5-yr forecast base; anchored on EIA Brent consensus ~63 USD/bbl + restored taxes (product review 2026-08-07)"
+    },
+    "DIESEL_PRICE_CURRENT_VND": {
+      "domain": "fuel",
+      "verified_at": "2026-08-27",
+      "source": "https://baomoi.com/tien-ich-gia-xang-dau.epi",
+      "note": "MoT-managed vung-1 retail cycle (baomoi.com aggregate)"
+    },
+    "DIESEL_PRICE_FORECAST_VND": {
+      "domain": "fuel",
+      "verified_at": "2026-08-06",
+      "source": "https://www.petrolimex.com.vn/",
+      "note": "5-yr forecast (post-crisis mean reversion)"
+    },
+    "EV_CHARGING_PRICE_VND": {
+      "domain": "fuel",
+      "verified_at": "2026-08-08",
+      "source": "https://www.vinfastauto.com/",
+      "note": "V-Green standard rate, stable through 2029 per VinFast commitment"
+    },
+    "ICE_REGISTRATION_RATE_STANDARD": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Thong tu 155/2025/TT-BTC, effective Jan 1 2026"
+    },
+    "ICE_REGISTRATION_RATE_CENTRAL_CITY": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Central-city rate (Hanoi, HCMC)"
+    },
+    "EV_EXEMPTION_END_DATE": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Registration-fee exemption cliff for BEVs"
+    },
+    "EV_POST_EXEMPTION_DISCOUNT": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Post-exemption EV registration discount fraction"
+    },
+    "PLATE_FEES": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Legacy fallback keyed by area tier (Area-1 -> 14M)"
+    },
+    "PLATE_FEE_METRO": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Hanoi + HCMC metro rate (Thong tu 155/2025)"
+    },
+    "PLATE_FEE_NON_METRO_AREA1": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Da Nang, Hue, Can Tho, Hai Phong provincial rate"
+    },
+    "INSPECTION_FEE": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://hethongphapluat.com/chu-de/thong-tu-55-2022-tt-btc.html",
+      "note": "250k inspection + 90k certificate stamp; cadence Thong tu 47/2024/TT-BGTVT preserved by TT 30/2026/TT-BXD"
+    },
+    "ROAD_MAINTENANCE_FEE_YEARLY": {
+      "domain": "fees",
+      "verified_at": "2026-08-08",
+      "source": "https://vanban.chinhphu.vn/?docid=205090&pageid=27160",
+      "note": "Road maintenance contribution, fixed by law"
+    },
+    "CIVIL_INSURANCE_UNDER_6": {
+      "domain": "insurance",
+      "verified_at": "2026-08-08",
+      "source": "https://hethongphapluat.com/van-ban/bao-hiem/thong-tu-04-2021-tt-btc_476877.aspx",
+      "note": "Mandatory civil liability, <6 seats"
+    },
+    "CIVIL_INSURANCE_6_TO_11": {
+      "domain": "insurance",
+      "verified_at": "2026-08-08",
+      "source": "https://hethongphapluat.com/van-ban/bao-hiem/thong-tu-04-2021-tt-btc_476877.aspx",
+      "note": "Mandatory civil liability, 6-11 seats"
+    },
+    "OPTIONAL_PHYSICAL_DAMAGE_INSURANCE_RATE": {
+      "domain": "insurance",
+      "verified_at": "2026-08-08",
+      "source": "https://viettelmoney.vn/",
+      "note": "Than vo market rate 1.1-1.7 pct of MSRP (Viettel Money table; PVI/Bao Viet/Bao Minh typical); mid-band default"
+    },
+    "BASE_ANNUAL_MAINTENANCE_ICE": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "NATCenter + Hyundai Ba Ria dealer schedules",
+      "note": "ICE/ICE-D/HEV shared base: 4-8 minor services/yr x 500K-1.5M VND (Toyota/Honda cap nho cadence)"
+    },
+    "BASE_ANNUAL_MAINTENANCE_EV": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "https://dantri.com.vn/, thuongtruong.vn VinFast VF8/9 owner reports",
+      "note": "Upper bound of 200-500K/yr owner-reported spend, conservative vs legacy 6-10x overstatement"
+    },
+    "MAINTENANCE_MAJOR_KM": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "Vietnamese OEM major-service intervals",
+      "note": "Reference major-service km for legacy constants"
+    },
+    "MAINTENANCE_MAJOR_COST_ICE": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "NATCenter dealer quotes",
+      "note": "Legacy single-major cost (superseded by MAINTENANCE_SPIKES)"
+    },
+    "MAINTENANCE_MAJOR_COST_ICE_D": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "Ford Ranger / Mazda dealer quotes",
+      "note": "Legacy single-major cost (superseded by MAINTENANCE_SPIKES)"
+    },
+    "MAINTENANCE_MAJOR_COST_EV": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-08",
+      "source": "VinFast service menu",
+      "note": "Legacy single-major cost (superseded by MAINTENANCE_SPIKES)"
+    },
+    "MAINTENANCE_SPIKES": {
+      "domain": "maintenance",
+      "verified_at": "2026-08-09",
+      "source": "NATCenter + Ford Ranger/Mazda dealer quotes + dantri/thuongtruong VF8 owner reports",
+      "note": "[km_threshold, cost_vnd] pairs per powertrain; ICE 120k assumes timing CHAIN (Vios/City class); ICE-D DPF/EGR premium; EV 15k/45k/90k VinFast cadence"
+    },
+    "SAVINGS_INTEREST_RATE": {
+      "domain": "market",
+      "verified_at": "2026-08-08",
+      "source": "Vietnamese bank deposit rates",
+      "note": "Opportunity-cost discount rate applied to TCO components"
+    },
+    "PARKING_TOLL_ESTIMATES": {
+      "domain": "parking",
+      "verified_at": "2026-08-08",
+      "source": "viettour3mien.vn, vetc.com.vn, hadocentrosagarden.vn, lsvn.vn",
+      "note": "Monthly parking/toll by area tier; area1_metro recalibrated against Vinhomes Central Park / Ha Do Centrosa / Kingdom 101 means"
+    }
+  }
+}

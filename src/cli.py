@@ -1,7 +1,8 @@
 """ViDrive CLI display and interaction functions."""
 from src.config import (
     BRAND_LIQUIDITY_MAP, LAST_UPDATED, DATA_RECENCY_DAYS, WIZARD_SEGMENTS,
-    CITY_LIST, MAX_COMPARISON_CARS, APP_VERSION,
+    CITY_LIST, MAX_COMPARISON_CARS, APP_VERSION, MAINTENANCE_SPIKES,
+    EV_MAINTENANCE_DISCOUNT,
 )
 from datetime import date
 from typing import overload, Literal
@@ -225,6 +226,7 @@ def print_city_list():
         print(f"{display:<25} {area_label:<10} {diacritic_key:<15}")
     print()
     print(t('city_area1_note'))
+    print(t('city_area1_metro_note'))
     print(t('city_area2_note'))
     print(t('city_area3_note'))
 
@@ -297,11 +299,19 @@ def print_breakdown(car, city, km, years, area, ratio, res, show_opp=False):
     print(t('breakdown_maint'))
     maint = res['maint']
     base_annual = car.get('annual_maintenance', 8_000_000)
-    milestones = (km * years) // 40_000
-    major_cost = 5_000_000 if car['type'] == 'ICE' else (6_500_000 if car['type'] == 'ICE-D' else 1_500_000)
-    print(t('breakdown_maint_detail',
-            base=base_annual, years=years, milestones=milestones,
-            major_cost=major_cost, total=maint))
+    is_ev = car['type'] == 'EV'
+    effective_base = base_annual * (EV_MAINTENANCE_DISCOUNT if is_ev else 1.0)
+    print(t('breakdown_maint_base', base=effective_base, years=years))
+    total_km = km * years
+    spikes = MAINTENANCE_SPIKES.get(car['type'], MAINTENANCE_SPIKES['ICE'])
+    spike_total = 0
+    for threshold, cost in spikes:
+        if total_km >= threshold:
+            print(t('breakdown_maint_spike', km=threshold, cost=cost))
+            spike_total += cost
+    if spike_total > 0:
+        print(t('breakdown_maint_spike_total', spike_total=spike_total))
+    print(t('breakdown_maint_total', total=maint))
     print()
 
     # Opportunity cost breakdown
