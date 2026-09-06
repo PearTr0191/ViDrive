@@ -8,7 +8,7 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 > The Web version of ViDrive is now live! Visit here: https://vidrive-web.pages.dev/
 
 > [!NOTE]
-> As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. The app will work fine as long as new data is pulled in on the user's end, but as a student project, this is it. I will seek field experts' advice and discuss initiatives to potentially bring ViDrive to more people, ideally in a more user-friendly and visually satisfying form factor, even though the code-ish font and sheer simplicity of Interactive Mode has grown on me hard.
+> As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. Occasional patches and improvements will be carried over from actively-developed ViDrive Web.
 
 * **Lifecycle TCO Analysis**: Generate a granular financial breakdown including acquisition, maintenance, and resale to uncover the true monthly cost of car ownership. Including:
 * **True Opportunity Costs**: Optionally account for the "Lost Bank Interest" on your invested capital through an average compound interest model.
