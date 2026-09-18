@@ -1,6 +1,12 @@
 # ViDrive
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Web app](https://img.shields.io/badge/Web_app-vi_drive_web.pages.dev-00841D)](https://vidrive-web.pages.dev/)
+
 A CLI application designed to strip away the guesswork for drivers in Vietnam. ViDrive looks at the long game — registration fees, maintenance, fuel, and the hidden costs of keeping a car on Vietnamese roads — providing insights beyond the sticker price.
+
+![ViDrive Web — TCO calculator](docs/screenshots/TCO_Calculator_desktop.png)
 
 ## Current Functionality
 
@@ -10,7 +16,7 @@ A CLI application designed to strip away the guesswork for drivers in Vietnam. V
 > [!NOTE]
 > As of 2:41am UTC+7, 24/07/2026, ViDrive, as a CLI application, has reached the end of its active development timeline. Occasional patches and improvements will be carried over from actively-developed ViDrive Web.
 
-* **Lifecycle TCO Analysis**: Generate a granular financial breakdown including acquisition, maintenance, and resale to uncover the true monthly cost of car ownership. Including:
+* **Lifecycle TCO Analysis**: Generate a granular financial breakdown including acquisition, maintenance, and resale to uncover the true monthly cost of car ownership.
 * **True Opportunity Costs**: Optionally account for the "Lost Bank Interest" on your invested capital through an average compound interest model.
 * **Tax Resolution**: Automated 3-tier registration fee detection across all Vietnamese administrative zones (Cities, towns, and rural districts).
 * **City vs. Highway Physics**: Fuel costs estimation for ICE, HEV, and EV powertrains that accounts for non-linear consumption in urban gridlock vs. open-road drag.
@@ -139,7 +145,10 @@ ViDrive/
 ├── data/
 │   ├── cars.json              # Vehicle database
 │   └── models/                # ML model artifacts (Git LFS)
+├── docs/
+│   └── screenshots/           # Web app screenshots
 ├── CHANGELOG.md               # Full change history
+├── LICENSE
 ├── requirements.txt
 └── README.md
 ```
@@ -150,6 +159,14 @@ ViDrive/
 * Git LFS (for ML model files)
 * `pdflatex` (optional, for PDF export — falls back to plain text if unavailable)
 
+## Tiếng Việt
+
+ViDrive là ứng dụng CLI miễn phí tính **tổng chi phí sở hữu ô tô (TCO)** tại Việt Nam: giá lăn bánh, nhiên liệu, bảo dưỡng, bảo hiểm, khấu hao và giá bán lại — minh bạch, có nguồn dẫn rõ ràng. Bản Web kèm công cụ tính chi phí và hướng dẫn nuôi xe cho từng dòng xe: https://vidrive-web.pages.dev/
+
+## Contributing
+
+Issues and pull requests are welcome. The Web version lives in a separate repo; CLI patches land here. When reporting a bug, include the command you ran and its output.
+
 ## License
 
-See the [GitHub repository](https://github.com/PearTr0191/ViDrive) for license information.
+[MIT](LICENSE) — free to use, modify, and share.
