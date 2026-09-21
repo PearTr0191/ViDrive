@@ -6,7 +6,9 @@
 
 A CLI application designed to strip away the guesswork for drivers in Vietnam. ViDrive looks at the long game — registration fees, maintenance, fuel, and the hidden costs of keeping a car on Vietnamese roads — providing insights beyond the sticker price.
 
-![ViDrive Web — TCO calculator](docs/screenshots/TCO_Calculator_desktop.png)
+![ViDrive Web — TCO calculator](<img width="2852" height="1543" alt="image" src="https://github.com/user-attachments/assets/22f430c4-0bb4-4f17-b6dd-5dfd4d3c6250" />
+)
+*Image from ViDrive Web.*
 
 ## Current Functionality
 
